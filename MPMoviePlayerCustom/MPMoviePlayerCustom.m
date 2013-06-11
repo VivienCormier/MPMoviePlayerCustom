@@ -8,7 +8,6 @@
 
 #import "MPMoviePlayerCustom.h"
 #import "AppDelegate.h"
-#import "FullScreenGestion.h"
 
 @implementation MPMoviePlayerCustom
 
