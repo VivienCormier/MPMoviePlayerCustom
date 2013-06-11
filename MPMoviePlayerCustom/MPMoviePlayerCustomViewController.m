@@ -79,7 +79,6 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
     [self.view addSubview:_player.view];
     
     _wrapperControls    = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    _wrapperControls.backgroundColor = [UIColor greenColor];
     
     [self initController];
     [self.view addSubview:_wrapperControls];
@@ -189,20 +188,23 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
     self.view.frame             = CGRectMake(0, 0, frame.size.width, frame.size.height);
     self.player.view.frame      = CGRectMake(0, 0, frame.size.width, frame.size.height);
     self.wrapperControls.frame  = CGRectMake(0, 0, frame.size.width, frame.size.height);
-    // Prévoir si les controls sont caché
-    self.header.frame           = CGRectMake(0, 0, frame.size.width, headerHeight);
-    self.sliderTime.frame       = CGRectMake(btnOkWidth, (headerHeight - 30) / 2, self.view.frame.size.width - ( btnOkWidth +btnScaleWidth ) , 30);
+    _zoneTouchControls.frame    = CGRectMake(0, 0, frame.size.width, frame.size.height);
+    self.sliderTime.frame       = CGRectMake(btnOkWidth, (headerHeight - 30) / 2, frame.size.width - ( btnOkWidth +btnScaleWidth ) , 30);
     self.btnOk.frame            = CGRectMake(0, (headerHeight - 30) / 2, btnOkWidth, 30);
-    self.btnFullScreen.frame    = CGRectMake(self.view.frame.size.width - btnScaleWidth, (headerHeight - 30) / 2, btnScaleWidth, 30);
+    self.btnFullScreen.frame    = CGRectMake(frame.size.width - btnScaleWidth, (headerHeight - 30) / 2, btnScaleWidth, 30);
     int pannelWidth;
     if (self.view.frame.size.width > panelWidthMin) {
-        pannelWidth = panelWidthMin + (self.view.frame.size.width - panelWidthMin) * 0.6;
+        pannelWidth = panelWidthMin + (frame.size.width - panelWidthMin) * 0.6;
     }else{
         pannelWidth = panelWidthMin;
     }
-    // Prévoir si les controls sont caché
-    self.panel.frame            = CGRectMake((self.view.frame.size.width - pannelWidth)/2, (self.view.frame.size.height - 70) * 0.7, pannelWidth, 70);
-    self.btnPlayPause.frame     = CGRectMake( (pannelWidth - btnPlayPauseWidth) / 2, self.panel.frame.size.height * 0.1, btnPlayPauseWidth, 32);
+    if (_controlsIsHidden) {
+        self.header.frame       = CGRectMake(0, - headerHeight, frame.size.width, headerHeight);
+        self.panel.frame        = CGRectMake((frame.size.width - pannelWidth)/2, frame.size.height, pannelWidth, 70);
+    }else{
+        self.header.frame       = CGRectMake(0, 0, frame.size.width, headerHeight);
+        self.panel.frame        = CGRectMake((frame.size.width - pannelWidth)/2, (frame.size.height - 70) * 0.7, pannelWidth, 70);
+    }
     self.btnBackward.frame      = CGRectMake(pannelWidth * 0.3, self.panel.frame.size.height * 0.1, btnBackwardWidth, 32);
     self.btnForward.frame       = CGRectMake((pannelWidth * 0.7) - btnForwardWidth, self.panel.frame.size.height * 0.1, btnForwardWidth, 32);
     self.sliderVolume.frame     = CGRectMake(15, (self.panel.frame.size.height - 30), pannelWidth - 30, 30);
@@ -223,7 +225,7 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
     [self.player play];
     
     // On lance la gestion de l'affichage des controls
-    [self gestionShowControlsAndisPlayAction:YES];
+    [self performSelector:@selector(gestionShowControls) withObject:nil afterDelay:4.0f];
     
 }
 
@@ -237,7 +239,15 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
 
 - (void)okAction{[self.delegate moviePlayerBtnOkAction];}
 
-- (void)fullScreenAction{[self.delegate moviePlayerFullScreen];}
+- (void)fullScreenAction{
+    
+    [self.delegate moviePlayerFullScreen];
+    
+    // On relance le timer si les controls sont affichés
+    if (!_controlsIsHidden) {
+        [self resetTimerControls];
+    }
+}
 
 #pragma mark - Private Functions
 
@@ -281,19 +291,15 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
     _sliderVolumeIsTouch = NO;
 }
 
-// Touch _zoneTouchControls
-- (void)gestionShowControls{[self gestionShowControlsAndisPlayAction:NO];}
-
 // GestionTouch
-- (void)gestionShowControlsAndisPlayAction:(BOOL)isPlayAction{
+- (void)gestionShowControls{
     
     if (_controlsIsHidden) {
         
         // On affiche les controls
-        
         [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction
                          animations:^{
-                             self.header.frame = CGRectMake(0,0, self.view.frame.size.width, self.header.frame.size.height);
+                             self.header.frame = CGRectMake(0,0, self.header.frame.size.width, self.header.frame.size.height);
                              self.panel.frame = CGRectMake( self.panel.frame.origin.x, (self.view.frame.size.height - 70) * 0.7, self.panel.frame.size.width, self.panel.frame.size.height);
                          }
                          completion:^(BOOL finished) {
@@ -307,14 +313,9 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
         // On stop le timer
         [_timerControl invalidate];
         
-        float delay = 0;
-        
-        // Si c'est juste après un play on attend avant de cacher
-        if (isPlayAction) delay = 4.0f;
-        
-        [UIView animateWithDuration:0.4 delay:delay options:UIViewAnimationOptionAllowUserInteraction
+        [UIView animateWithDuration:0.4 delay:0.0f options:UIViewAnimationOptionAllowUserInteraction
                          animations:^{
-                             self.header.frame = CGRectMake(0, - headerHeight, self.view.frame.size.width, self.header.frame.size.height);
+                             self.header.frame = CGRectMake(0, - headerHeight, self.header.frame.size.width, self.header.frame.size.height);
                              self.panel.frame = CGRectMake( self.panel.frame.origin.x, self.view.frame.size.height, self.panel.frame.size.width, self.panel.frame.size.height);
                          }
                          completion:^(BOOL finished) {
@@ -326,10 +327,8 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
 
 // Timer hidden Controls
 - (void)resetTimerControls{
-    _timerControl = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(actionTimerControls) userInfo:nil repeats:NO];
+    _timerControl = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(gestionShowControls) userInfo:nil repeats:NO];
 }
-
-- (void)actionTimerControls{[self gestionShowControlsAndisPlayAction:NO];}
 
 #pragma mark - - Rotation
 
