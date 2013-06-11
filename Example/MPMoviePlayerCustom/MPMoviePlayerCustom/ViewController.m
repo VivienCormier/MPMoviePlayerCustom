@@ -17,19 +17,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(20, 20, 360, 200)];
-    self.moviePlayer.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
+    
+    UIView *test = [[UIView alloc]initWithFrame:CGRectMake(50, 50, 500, 500)];
+    [self.view addSubview:test];
+    
+    self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(20, 50, 360, 200)];
+    self.moviePlayer.player.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
     self.moviePlayer.delegate = self;
-    [self.view addSubview:_moviePlayer];
-    [self.moviePlayer play];
-//    [self performSelector:@selector(playMovie) withObject:nil afterDelay:1];
+    [test addSubview:_moviePlayer];
+    self.view.backgroundColor = [UIColor grayColor];
+    [self performSelector:@selector(playMovie) withObject:nil afterDelay:1];
 }
 
 - (void)playMovie{
-    
     [self.moviePlayer play];
-//    [self performSelector:@selector(step2) withObject:nil afterDelay:2];
+    [self performSelector:@selector(step2) withObject:nil afterDelay:2];
 }
 
 - (void)step2{
