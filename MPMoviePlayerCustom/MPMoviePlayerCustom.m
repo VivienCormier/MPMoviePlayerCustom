@@ -134,6 +134,10 @@
 
 - (void)moviePlayerFullScreen{[self fullScreenAction];}
 
+- (void)moviePlayerDidFinish{[self.delegate moviePlayerDidFinish];}
+
+- (void)moviePlayerBtnOkAction{[self.delegate moviePlayerBtnOkAction];}
+
 #pragma mark - Private Functions
 
 - (CGRect)convertRectToAbsolutePsotion{

@@ -25,8 +25,9 @@
     self.moviePlayer.player.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
     self.moviePlayer.delegate = self;
     [test addSubview:_moviePlayer];
+    [self.moviePlayer play];
     self.view.backgroundColor = [UIColor grayColor];
-    [self performSelector:@selector(playMovie) withObject:nil afterDelay:1];
+//    [self performSelector:@selector(playMovie) withObject:nil afterDelay:1];
 }
 
 - (void)playMovie{
@@ -41,6 +42,12 @@
 - (void)moviePlayerBtnOkAction{
     
     NSLog(@"Btn Ok");
+    
+}
+
+- (void)moviePlayerDidFinish{
+    
+    NSLog(@"Video Finish");
     
 }
 

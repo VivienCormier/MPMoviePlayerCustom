@@ -12,8 +12,9 @@
 @protocol MPMoviePlayerCustomControllerDelegate <NSObject>
 
 // Delegate Function
-@optional
+@required
 - (void)moviePlayerBtnOkAction;
+- (void)moviePlayerDidFinish;
 - (void)moviePlayerFullScreen;
 @end
 

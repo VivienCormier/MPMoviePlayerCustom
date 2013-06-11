@@ -91,6 +91,9 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
     _controlsIsHidden           = NO;
     _isFullScreen               = NO;
     
+    // Event Movie Player
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishPlay) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+    
     _sound = [MPMusicPlayerController applicationMusicPlayer];
     
     //Zone Touch Controls
@@ -205,6 +208,7 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
         self.header.frame       = CGRectMake(0, 0, frame.size.width, headerHeight);
         self.panel.frame        = CGRectMake((frame.size.width - pannelWidth)/2, (frame.size.height - 70) * 0.7, pannelWidth, 70);
     }
+    self.btnPlayPause.frame     = CGRectMake( (pannelWidth - btnPlayPauseWidth) / 2, self.panel.frame.size.height * 0.1, btnPlayPauseWidth, 32);
     self.btnBackward.frame      = CGRectMake(pannelWidth * 0.3, self.panel.frame.size.height * 0.1, btnBackwardWidth, 32);
     self.btnForward.frame       = CGRectMake((pannelWidth * 0.7) - btnForwardWidth, self.panel.frame.size.height * 0.1, btnForwardWidth, 32);
     self.sliderVolume.frame     = CGRectMake(15, (self.panel.frame.size.height - 30), pannelWidth - 30, 30);
@@ -238,6 +242,8 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
 - (void)forward{[self.player beginSeekingForward];}
 
 - (void)okAction{[self.delegate moviePlayerBtnOkAction];}
+
+-(void)finishPlay{[self.delegate moviePlayerDidFinish];}
 
 - (void)fullScreenAction{
     
