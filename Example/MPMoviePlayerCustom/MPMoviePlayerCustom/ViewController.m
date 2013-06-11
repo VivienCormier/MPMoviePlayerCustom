@@ -31,7 +31,7 @@
 
 - (void)playMovie{
     [self.moviePlayer play];
-    [self performSelector:@selector(step2) withObject:nil afterDelay:2];
+//    [self performSelector:@selector(step2) withObject:nil afterDelay:2];
 }
 
 - (void)step2{

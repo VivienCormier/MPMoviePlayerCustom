@@ -21,6 +21,7 @@
 
 //Ready-only
 @property (nonatomic, readonly) NSTimer *timerUpdate;
+@property (nonatomic, readonly) NSTimer *timerControl;
 @property (nonatomic, readonly) BOOL sliderTimeIsTouch;
 @property (nonatomic, readonly) BOOL sliderVolumeIsTouch;
 @property (nonatomic, readonly) BOOL controlsIsHidden;
