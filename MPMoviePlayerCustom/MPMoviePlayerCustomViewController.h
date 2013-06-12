@@ -26,7 +26,7 @@
 @property (nonatomic, readonly) BOOL sliderTimeIsTouch;
 @property (nonatomic, readonly) BOOL sliderVolumeIsTouch;
 @property (nonatomic, readonly) BOOL controlsIsHidden;
-@property (nonatomic, readonly) BOOL isFullScreen;
+@property (nonatomic, readwrite) BOOL isFullScreen;
 @property (nonatomic, readonly) UIView *wrapperControls;
 @property (nonatomic, readonly) UIView *zoneTouchControls;
 @property (nonatomic, readonly) MPMoviePlayerCustomViewController *wrapperFullScreen;
@@ -103,5 +103,6 @@
 
 - (void)stop;
 
+- (void)updatingScreenSize;
 
 @end

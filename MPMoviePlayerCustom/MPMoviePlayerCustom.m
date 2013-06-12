@@ -24,8 +24,8 @@
         self.player             = [[MPMoviePlayerCustomViewController alloc] initWithFrame:frame];
         self.player.delegate    = self;
         _isFullScreen           = NO;
-        self.backgroundColor    = [UIColor greenColor];
         [self addSubview:self.player.view];
+        
     }
     return self;
 }
@@ -39,6 +39,7 @@
         self.player.delegate    = self;
         _isFullScreen           = NO;
         [self addSubview:self.player.view];
+       
     }
     
     return self;
@@ -61,7 +62,7 @@
 
 - (void)setFrame:(CGRect)frame{
     [super setFrame:frame];
-    self.player.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+    [self.player setFrame:frame];
 }
 
 #pragma mark - Player Methode
@@ -119,11 +120,17 @@
                          }
                          
                          if (!_isFullScreen) {
+                             
+                             //On supprime le player de la vue courant
+                             [self.player.view removeFromSuperview];
+                             
                              AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                              UIViewController *rootViewController = appDelegate.window.rootViewController;
                              [rootViewController presentViewController:self.player animated:NO completion:nil];
+                             
                          }
                          _isFullScreen = !_isFullScreen;
+                         self.player.isFullScreen = _isFullScreen;
                      }];
     
     
