@@ -2,7 +2,7 @@
 //  ViewController.m
 //  MPMoviePlayerCustom
 //
-//  Created by dvd on 22/05/13.
+//  Created by Vivien Cormier on 22/05/13.
 //  Copyright (c) 2013 Vivien Cormier. All rights reserved.
 //
 
@@ -24,10 +24,14 @@
     self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(10, 50, 300, 200)];
     self.moviePlayer.player.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
     self.moviePlayer.delegate = self;
+    self.moviePlayer.headerColorBackground = [UIColor greenColor];
+    self.moviePlayer.sliderMaximumTrack = [UIImage imageNamed:@"Template_slider_maximumTrack_White"];
+    self.moviePlayer.sliderMinimumTrack = [UIImage imageNamed:@"Template_slider_minimumTrack_White"];
+    self.moviePlayer.sliderCurrentThumbImage = [UIImage imageNamed:@"Template_slider_Thumb_White"];
+    self.moviePlayer.controleCustomStyle = ControleCustomStyleFree;
     [test addSubview:_moviePlayer];
     [self.moviePlayer play];
     self.view.backgroundColor = [UIColor grayColor];
-//    [self performSelector:@selector(playMovie) withObject:nil afterDelay:1];
 }
 
 - (void)playMovie{

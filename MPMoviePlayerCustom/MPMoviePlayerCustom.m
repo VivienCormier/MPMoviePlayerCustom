@@ -2,7 +2,7 @@
 //  MPMoviePlayerCustom.m
 //  MPMoviePlayerCustom
 //
-//  Created by dvd on 22/05/13.
+//  Created by Vivien Cormier on 22/05/13.
 //  Copyright (c) 2013 Vivien Cormier. All rights reserved.
 //
 
@@ -135,6 +135,32 @@
     
     
 
+}
+
+- (void)setControleCustomStyle:(ControleCustomStyle)controleCustomStyle{
+    
+    int controleStyle = 0;
+    
+    switch (controleCustomStyle) {
+        case ControleCustomStyleWhite:
+            controleStyle = 1;
+            break;
+        case ControleCustomStyleBlack:
+            controleStyle = 2;
+            break;
+        case ControleCustomStyleFree:
+            controleStyle = 99;
+            self.player.headerColorBackground = _headerColorBackground;
+            self.player.sliderMaximumTrack = _sliderMaximumTrack;
+            self.player.sliderMinimumTrack = _sliderMinimumTrack;
+            self.player.sliderCurrentThumbImage = _sliderCurrentThumbImage;
+            break;
+        default:
+            break;
+    }
+    
+    if (controleStyle != 0) [self.player changeControleTo:controleStyle];
+    
 }
 
 #pragma mark - Delegate MPMoviePlayerCustomController

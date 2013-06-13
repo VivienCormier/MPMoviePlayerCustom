@@ -2,12 +2,13 @@
 //  MPMoviePlayerCustomViewController.h
 //  MPMoviePlayerCustom
 //
-//  Created by dvd on 23/05/13.
+//  Created by Vivien Cormier on 23/05/13.
 //  Copyright (c) 2013 Vivien Cormier. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "MPMoviePlayerCustomTemplate.h"
 
 @protocol MPMoviePlayerCustomControllerDelegate <NSObject>
 
@@ -20,7 +21,9 @@
 
 @interface MPMoviePlayerCustomViewController : UIViewController
 
+//
 //Ready-only
+//
 @property (nonatomic, readonly) NSTimer *timerUpdate;
 @property (nonatomic, readonly) NSTimer *timerControl;
 @property (nonatomic, readonly) BOOL sliderTimeIsTouch;
@@ -29,11 +32,15 @@
 @property (nonatomic, readwrite) BOOL isFullScreen;
 @property (nonatomic, readonly) UIView *wrapperControls;
 @property (nonatomic, readonly) UIView *zoneTouchControls;
-@property (nonatomic, readonly) MPMoviePlayerCustomViewController *wrapperFullScreen;
 @property (nonatomic, readonly) MPMusicPlayerController *sound;
 @property (nonatomic, readonly) CGRect smallFrame;
 @property (nonatomic, readonly) int heightScreen;
 @property (nonatomic, readonly) int widthScreen;
+@property (nonatomic, readonly) MPMoviePlayerCustomViewController *wrapperFullScreen;
+@property (nonatomic, readonly) MPMoviePlayerCustomTemplate *playerTemplate;
+// Header
+@property (nonatomic, readonly) UIView *header;
+@property (nonatomic, readonly) UISlider *sliderTime;
 
 //
 // Movie Player
@@ -45,15 +52,23 @@
 
 @property (nonatomic, strong) NSString *url;
 
-@property (nonatomic, readwrite) NSUInteger controleCustomStyle;
+@property (nonatomic, readwrite) int controleCustomStyle;
 
 //
 // Header
 //
 
-@property (nonatomic, strong) UIView *header;
+@property (nonatomic, readwrite) UIColor *headerColorBackground;
 
-@property (nonatomic, strong) UISlider *sliderTime;
+@property (nonatomic, readwrite) UIImage *sliderMinimumTrack;
+
+@property (nonatomic, readwrite) UIImage *sliderMaximumTrack;
+
+@property (nonatomic, readwrite) UIImage *sliderCurrentThumbImage;
+
+
+
+
 
 @property (nonatomic, strong) UIButton *btnOk;
 @property (nonatomic, strong) UIButton *btnFullScreen;
@@ -89,6 +104,8 @@
 
 - (void)setFrame:(CGRect)frame;
 
+- (void)changeControleTo:(int)controleCustomStyle;
+
 - (void)backward;
 
 - (void)forward;
@@ -102,7 +119,5 @@
 - (void)pause;
 
 - (void)stop;
-
-- (void)updatingScreenSize;
 
 @end

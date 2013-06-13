@@ -2,12 +2,12 @@
 //  MPMoviePlayerCustomViewController.m
 //  MPMoviePlayerCustom
 //
-//  Created by dvd on 23/05/13.
+//  Created by Vivien Cormier on 23/05/13.
 //  Copyright (c) 2013 Vivien Cormier. All rights reserved.
 //
 
 #import "MPMoviePlayerCustomViewController.h"
-#import "AppDelegate.h"
+#import "MPMoviePlayerCustomTemplate.h"
 
 @interface MPMoviePlayerCustomViewController ()
 
@@ -31,14 +31,9 @@ NSString *nameImgBtnPause = @"btnPause";
 NSString *nameImgBtnBackward = @"btnBackward";
 NSString *nameImgBtnForward = @"btnForward";
 
-enum  NSMPMoviePlayerCustom : NSUInteger  {
-    NSMPMoviePlayerCustom1 = 1
-};
-
 - (id)initWithFrame:(CGRect)frame
 {
     if (self) {
-        
         // Initialization code
         self.view.frame         = CGRectMake(0, 0, frame.size.width, frame.size.height);
         self.player             = [[MPMoviePlayerController alloc] init];
@@ -47,7 +42,8 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
         
         _wrapperControls    = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         
-        [self initController];
+        [self initParams];
+        [self loadControls];
         [self.view addSubview:_wrapperControls];
     }
     return self;
@@ -64,7 +60,8 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
         
         _wrapperControls    = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         
-        [self initController];
+        [self initParams];
+        [self loadControls];
         [self.view addSubview:_wrapperControls];
     }
     
@@ -80,19 +77,23 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
     
     _wrapperControls    = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     
-    [self initController];
+    [self initParams];
+    [self loadControls];
     [self.view addSubview:_wrapperControls];
     return self;
 }
 
-- (void)initController{
+- (void)initParams{
     
     // Init params
-    
     self.view.clipsToBounds     = YES;
     _controlsIsHidden           = NO;
     _isFullScreen               = NO;
     _sliderTimeIsTouch          = NO;
+    self.controleCustomStyle    = 0;
+    
+    // Init Template
+    _playerTemplate = [[MPMoviePlayerCustomTemplate alloc] init];
     
     // Event Movie Player
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishPlay) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
@@ -106,75 +107,89 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
     [_zoneTouchControls addGestureRecognizer:tapControls];
     [_wrapperControls addSubview:_zoneTouchControls];
     
-    //Player Parameters
-    self.player.controlStyle    = MPMovieControlStyleNone;
-    self.controleCustomStyle    = NSMPMoviePlayerCustom1; //DefaultPanel
-    
-    //Header
-    self.header     = [[UIView alloc]init];
-    self.header.backgroundColor = [UIColor redColor];
-    [self.wrapperControls addSubview:_header];
-    
-    //Slider
-    self.sliderTime                     = [[UISlider alloc]init];
-    self.sliderTime.backgroundColor     = [UIColor greenColor];
-    self.sliderTime.value               = 0;
-    [self.sliderTime addTarget:self action:@selector(sliderTimeDown) forControlEvents:UIControlEventTouchDown];
-    [self.sliderTime addTarget:self action:@selector(sliderTimeUp) forControlEvents:UIControlEventTouchUpInside];
-    [self.header addSubview:_sliderTime];
-    
-    //Button Ok
-    self.imgBtnOk   = [UIImage imageNamed:nameImgBtnOk];
-    self.btnOk      = [[UIButton alloc]init];
-    [self.btnOk setImage:_imgBtnOk forState:UIControlStateNormal];
-    [self.btnOk addTarget:self action:@selector(okAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.header addSubview:_btnOk];
-    
-    //Button FullScreen
-    self.imgBtnFullScreen     = [UIImage imageNamed:nameImgBtnFullScreen];
-    self.btnFullScreen        = [[UIButton alloc]init];
-    [self.btnFullScreen setImage:_imgBtnFullScreen forState:UIControlStateNormal];
-    [self.btnFullScreen addTarget:self action:@selector(fullScreenAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.header addSubview:_btnFullScreen];
-    
-    //Pannel
-    self.panel = [[UIView alloc]init];
-    self.panel.backgroundColor = [UIColor redColor];
-    [self.wrapperControls addSubview:_panel];
-    
-    //Init controls 1
-    self.imgBtnPlay     = [UIImage imageNamed:nameImgBtnPlay];
-    self.imgBtnPause    = [UIImage imageNamed:nameImgBtnPause];
-    self.btnPlayPause   = [[UIButton alloc]init];
-    [self.btnPlayPause setImage:_imgBtnPlay forState:UIControlStateNormal];
-    [self.btnPlayPause addTarget:self action:@selector(play) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.imgBtnBackward = [UIImage imageNamed:nameImgBtnBackward];
-    self.btnBackward    = [[UIButton alloc]init];
-    [self.btnBackward setImage:_imgBtnBackward forState:UIControlStateNormal];
-    [self.btnBackward addTarget:self action:@selector(backward) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.imgBtnForward  = [UIImage imageNamed:nameImgBtnForward];
-    self.btnForward     = [[UIButton alloc]init];
-    [self.btnForward setImage:_imgBtnForward forState:UIControlStateNormal];
-    [self.btnForward addTarget:self action:@selector(forward) forControlEvents:UIControlEventTouchUpInside];
-    
-    // Volume
-    self.sliderVolume                     = [[UISlider alloc]init];
-    self.sliderVolume.backgroundColor     = [UIColor greenColor];
-    self.sliderVolume.value               = 0;
-    [self.sliderVolume addTarget:self action:@selector(sliderVolumeDown) forControlEvents:UIControlEventTouchDown];
-    [self.sliderVolume addTarget:self action:@selector(sliderVolumeUp) forControlEvents:UIControlEventTouchUpInside];
-    [self.panel addSubview:_sliderVolume];
-    
-    if (self.controleCustomStyle == NSMPMoviePlayerCustom1) {
-        [self.panel addSubview:_btnPlayPause];
-        [self.panel addSubview:_btnBackward];
-        [self.panel addSubview:_btnForward];
-    }
-    
     //Timer update
     _timerUpdate  = [NSTimer scheduledTimerWithTimeInterval:0.1f target:self selector:@selector(update) userInfo:nil repeats:YES];
+    
+    //Player Parameters
+    self.player.controlStyle    = MPMovieControlStyleNone;
+    
+}
+
+- (void)loadControls{
+    
+    [self initControls];
+    
+    //
+    // Params
+    //
+    
+    [_playerTemplate customHeader:_header forControleCustomStyle:_controleCustomStyle custom:_headerColorBackground];
+    
+    [_playerTemplate customSliderTime:_sliderTime forControleCustomStyle:_controleCustomStyle customMaximumTrack:_sliderMaximumTrack minimumTrack:_sliderMinimumTrack AndCurrentThumb:_sliderCurrentThumbImage];
+    
+    if (_controleCustomStyle == 0 || _controleCustomStyle == 1) {
+        
+        self.imgBtnOk   = [UIImage imageNamed:nameImgBtnOk];
+        
+        self.imgBtnFullScreen       = [UIImage imageNamed:nameImgBtnFullScreen];
+        
+        self.panel.backgroundColor  = [UIColor whiteColor];
+        
+        self.imgBtnPlay     = [UIImage imageNamed:nameImgBtnPlay];
+        self.imgBtnPause    = [UIImage imageNamed:nameImgBtnPause];
+        
+        self.imgBtnBackward = [UIImage imageNamed:nameImgBtnBackward];
+        
+        self.imgBtnForward  = [UIImage imageNamed:nameImgBtnForward];
+        
+        self.sliderVolume.backgroundColor   = [UIColor whiteColor];
+        
+    }else if (_controleCustomStyle == 2){
+        
+        self.imgBtnOk   = [UIImage imageNamed:nameImgBtnOk];
+        
+        self.imgBtnFullScreen       = [UIImage imageNamed:nameImgBtnFullScreen];
+        
+        self.panel.backgroundColor  = [UIColor blackColor];
+        
+        self.imgBtnPlay     = [UIImage imageNamed:nameImgBtnPlay];
+        self.imgBtnPause    = [UIImage imageNamed:nameImgBtnPause];
+        
+        self.imgBtnBackward = [UIImage imageNamed:nameImgBtnBackward];
+        
+        self.imgBtnForward  = [UIImage imageNamed:nameImgBtnForward];
+        
+        self.sliderVolume.backgroundColor   = [UIColor blackColor];
+        
+    }
+    
+    
+    //
+    // Add
+    //
+    
+    [self.wrapperControls addSubview:_header];
+    
+    [self.header addSubview:_sliderTime];
+    
+    [self.btnOk setImage:_imgBtnOk forState:UIControlStateNormal];
+    [self.header addSubview:_btnOk];
+    
+    [self.btnFullScreen setImage:_imgBtnFullScreen forState:UIControlStateNormal];
+    [self.header addSubview:_btnFullScreen];
+    
+    [self.wrapperControls addSubview:_panel];
+    
+    [self.panel addSubview:_sliderVolume];
+    
+    [self.btnPlayPause setImage:_imgBtnPlay forState:UIControlStateNormal];
+    [self.panel addSubview:_btnPlayPause];
+    
+    [self.btnBackward setImage:_imgBtnBackward forState:UIControlStateNormal];
+    [self.panel addSubview:_btnBackward];
+    
+    [self.btnForward setImage:_imgBtnForward forState:UIControlStateNormal];
+    [self.panel addSubview:_btnForward];
     
     // On mets en place les éléments
     [self setFrame:self.view.frame];
@@ -217,7 +232,7 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
 #pragma mark - Player Methode
 
 - (void)play{
-    NSLog(@"Play");
+    
     //Si la video est en accéléré
     if (self.player.currentPlaybackRate < 0 || self.player.currentPlaybackRate > 1) {
         // On arréte l'accélération
@@ -243,13 +258,11 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
 }
 
 - (void)backward{
-    NSLog(@"backward");
     if (!_controlsIsHidden) [self resetTimerControls];
     [self.player beginSeekingBackward];
 }
 
 - (void)forward{
-    NSLog(@"forward");
     if (!_controlsIsHidden) [self resetTimerControls];
     [self.player beginSeekingForward];
 }
@@ -273,7 +286,66 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
     
 }
 
+- (void)changeControleTo:(int)controleCustomStyle{
+    
+    self.controleCustomStyle = controleCustomStyle;
+    
+    [self loadControls];
+    
+}
+
 #pragma mark - Private Functions
+
+- (void)initControls{
+    
+    [self.header removeFromSuperview];
+    _header             = nil;
+    _header             = [[UIView alloc]init];
+    
+    [self.sliderTime removeFromSuperview];
+    _sliderTime             = nil;
+    _sliderTime             = [[UISlider alloc]init];
+    self.sliderTime.value   = 0;
+    [self.sliderTime addTarget:self action:@selector(sliderTimeDown) forControlEvents:UIControlEventTouchDown];
+    [self.sliderTime addTarget:self action:@selector(sliderTimeUp) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.btnOk removeFromSuperview];
+    self.btnOk              = nil;
+    self.btnOk              = [[UIButton alloc]init];
+    [self.btnOk addTarget:self action:@selector(okAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.btnFullScreen removeFromSuperview];
+    self.btnFullScreen      = nil;
+    self.btnFullScreen      = [[UIButton alloc]init];
+    [self.btnFullScreen addTarget:self action:@selector(fullScreenAction) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.panel removeFromSuperview];
+    self.panel              = nil;
+    self.panel              = [[UIView alloc]init];
+    
+    [self.btnPlayPause removeFromSuperview];
+    self.btnPlayPause       = nil;
+    self.btnPlayPause       = [[UIButton alloc]init];
+    [self.btnPlayPause addTarget:self action:@selector(play) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.btnBackward removeFromSuperview];
+    self.btnBackward        = nil;
+    self.btnBackward        = [[UIButton alloc]init];
+    [self.btnBackward addTarget:self action:@selector(backward) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.btnForward removeFromSuperview];
+    self.btnForward         = nil;
+    self.btnForward         = [[UIButton alloc]init];
+    [self.btnForward addTarget:self action:@selector(forward) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.sliderVolume removeFromSuperview];
+    self.sliderVolume       = nil;
+    self.sliderVolume       = [[UISlider alloc]init];
+    self.sliderVolume.value = 0;
+    [self.sliderVolume addTarget:self action:@selector(sliderVolumeDown) forControlEvents:UIControlEventTouchDown];
+    [self.sliderVolume addTarget:self action:@selector(sliderVolumeUp) forControlEvents:UIControlEventTouchUpInside];
+    
+}
 
 - (void)update{
     
@@ -361,7 +433,6 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
                              self.panel.frame = CGRectMake( self.panel.frame.origin.x, heightSelf, self.panel.frame.size.width, self.panel.frame.size.height);
                          }
                          completion:^(BOOL finished) {
-                             NSLog(@"%f",heightSelf);
                              _controlsIsHidden = !_controlsIsHidden;
                          }];
     }
@@ -391,8 +462,6 @@ enum  NSMPMoviePlayerCustom : NSUInteger  {
         _heightScreen    = [[UIScreen mainScreen] bounds].size.width;
         _widthScreen   = [[UIScreen mainScreen] bounds].size.height;
     }
-    
-    NSLog(@"%i %i",_widthScreen,_heightScreen);
     
 }
 

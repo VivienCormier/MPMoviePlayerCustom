@@ -2,7 +2,7 @@
 //  MPMoviePlayerCustom.h
 //  MPMoviePlayerCustom
 //
-//  Created by dvd on 22/05/13.
+//  Created by Vivien Cormier on 22/05/13.
 //  Copyright (c) 2013 Vivien Cormier. All rights reserved.
 //
 
@@ -18,18 +18,40 @@
 - (void)moviePlayerDidFinish;
 @end
 
+typedef enum ControleCustomStyle : NSInteger ControleCustomStyle;
+enum ControleCustomStyle : NSInteger {
+    ControleCustomStyleWhite,
+    ControleCustomStyleBlack,
+    ControleCustomStyleFree
+};
+
 @interface MPMoviePlayerCustom : UIView<MPMoviePlayerCustomControllerDelegate>
 
-// Ready-Only
 @property (nonatomic, readonly) int heightScreen;
 @property (nonatomic, readonly) int widthScreen;
 @property (nonatomic, readonly) BOOL isFullScreen;
 @property (nonatomic, readonly) CGRect smallFrame;
 @property (nonatomic, readonly) BOOL statusBarisHidden;
 
-//Public
+
 @property (nonatomic, strong) MPMoviePlayerCustomViewController *player;
 @property (retain) id delegate;
+@property (nonatomic, readwrite) ControleCustomStyle controleCustomStyle;
+
+/////////////
+// Custom UI
+/////////////
+
+//
+// Header
+//
+@property (nonatomic, readwrite) UIColor *headerColorBackground;
+
+@property (nonatomic, readwrite) UIImage *sliderMinimumTrack;
+
+@property (nonatomic, readwrite) UIImage *sliderMaximumTrack;
+
+@property (nonatomic, readwrite) UIImage *sliderCurrentThumbImage;
 
 // Functions
 
