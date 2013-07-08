@@ -24,18 +24,9 @@
 //
 //Ready-only
 //
-@property (nonatomic, readonly) NSTimer *timerUpdate;
-@property (nonatomic, readonly) NSTimer *timerControl;
-@property (nonatomic, readonly) BOOL sliderTimeIsTouch;
-@property (nonatomic, readonly) BOOL sliderVolumeIsTouch;
-@property (nonatomic, readonly) BOOL controlsIsHidden;
 @property (nonatomic, readwrite) BOOL isFullScreen;
 @property (nonatomic, readonly) UIView *wrapperControls;
 @property (nonatomic, readonly) UIView *zoneTouchControls;
-@property (nonatomic, readonly) MPMusicPlayerController *sound;
-@property (nonatomic, readonly) CGRect smallFrame;
-@property (nonatomic, readonly) int heightScreen;
-@property (nonatomic, readonly) int widthScreen;
 @property (nonatomic, readonly) MPMoviePlayerCustomViewController *wrapperFullScreen;
 @property (nonatomic, readonly) MPMoviePlayerCustomTemplate *playerTemplate;
 // Header

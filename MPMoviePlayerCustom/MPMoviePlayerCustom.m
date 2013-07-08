@@ -9,6 +9,16 @@
 #import "MPMoviePlayerCustom.h"
 #import "AppDelegate.h"
 
+@interface MPMoviePlayerCustom ()
+
+@property (nonatomic, readonly) int heightScreen;
+@property (nonatomic, readonly) int widthScreen;
+@property (nonatomic, readonly) BOOL isFullScreen;
+@property (nonatomic, readonly) CGRect smallFrame;
+@property (nonatomic, readonly) BOOL statusBarisHidden;
+
+@end
+
 @implementation MPMoviePlayerCustom
 
 @synthesize delegate;
@@ -175,9 +185,7 @@
 
 - (CGRect)convertRectToAbsolutePsotion{
     
-    
     CGRect finalFrame;
-    
     
     UIWindow* window = [[UIApplication sharedApplication] keyWindow];
     
@@ -215,7 +223,6 @@
     
     _widthScreen    = [[UIScreen mainScreen] bounds].size.width;
     _heightScreen   = [[UIScreen mainScreen] bounds].size.height;
-    
     
     if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeLeft || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeRight) {
         _heightScreen    = [[UIScreen mainScreen] bounds].size.width;

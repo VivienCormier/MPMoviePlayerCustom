@@ -11,6 +11,16 @@
 
 @interface MPMoviePlayerCustomViewController ()
 
+@property (nonatomic, readwrite) NSTimer *timerUpdate;
+@property (nonatomic, readwrite) NSTimer *timerControl;
+@property (nonatomic, readwrite) BOOL sliderTimeIsTouch;
+@property (nonatomic, readwrite) BOOL sliderVolumeIsTouch;
+@property (nonatomic, readwrite) BOOL controlsIsHidden;
+@property (nonatomic, readwrite) MPMusicPlayerController *sound;
+@property (nonatomic, readwrite) CGRect smallFrame;
+@property (nonatomic, readwrite) int heightScreen;
+@property (nonatomic, readwrite) int widthScreen;
+
 @end
 
 @implementation MPMoviePlayerCustomViewController

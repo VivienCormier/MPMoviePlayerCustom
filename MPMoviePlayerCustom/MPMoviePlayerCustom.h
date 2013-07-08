@@ -27,13 +27,6 @@ enum ControleCustomStyle : NSInteger {
 
 @interface MPMoviePlayerCustom : UIView<MPMoviePlayerCustomControllerDelegate>
 
-@property (nonatomic, readonly) int heightScreen;
-@property (nonatomic, readonly) int widthScreen;
-@property (nonatomic, readonly) BOOL isFullScreen;
-@property (nonatomic, readonly) CGRect smallFrame;
-@property (nonatomic, readonly) BOOL statusBarisHidden;
-
-
 @property (nonatomic, strong) MPMoviePlayerCustomViewController *player;
 @property (retain) id delegate;
 @property (nonatomic, readwrite) ControleCustomStyle controleCustomStyle;
