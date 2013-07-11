@@ -2,12 +2,22 @@
 //  MPMoviePlayerCustom.m
 //  MPMoviePlayerCustom
 //
-//  Created by dvd on 22/05/13.
+//  Created by Vivien Cormier on 22/05/13.
 //  Copyright (c) 2013 Vivien Cormier. All rights reserved.
 //
 
 #import "MPMoviePlayerCustom.h"
 #import "AppDelegate.h"
+
+@interface MPMoviePlayerCustom ()
+
+@property (nonatomic, readonly) int heightScreen;
+@property (nonatomic, readonly) int widthScreen;
+@property (nonatomic, readonly) CGRect smallFrame;
+@property (nonatomic, readonly) BOOL statusBarisHidden;
+@property (nonatomic, strong) MPMoviePlayerCustomViewController *player;
+
+@end
 
 @implementation MPMoviePlayerCustom
 
@@ -24,8 +34,8 @@
         self.player             = [[MPMoviePlayerCustomViewController alloc] initWithFrame:frame];
         self.player.delegate    = self;
         _isFullScreen           = NO;
-        self.backgroundColor    = [UIColor greenColor];
         [self addSubview:self.player.view];
+        
     }
     return self;
 }
@@ -39,6 +49,7 @@
         self.player.delegate    = self;
         _isFullScreen           = NO;
         [self addSubview:self.player.view];
+       
     }
     
     return self;
@@ -57,11 +68,55 @@
 
 #pragma mark - Setters
 
-- (void)setUrl:(NSString *)url{[self.player setUrl:url];}
+- (void)setUrl:(NSString *)url{
+    _url = url;
+    [self.player setUrl:url];
+}
+
+- (void)setTitle:(NSString *)title{
+    _title = title;
+    self.player.titleMovie = title;
+}
 
 - (void)setFrame:(CGRect)frame{
     [super setFrame:frame];
-    self.player.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+    [self.player setFrame:frame];
+}
+
+- (void)setControleCustomStyle:(ControleCustomStyle)controleCustomStyle{
+    
+    int controleStyle = 0;
+    
+    switch (controleCustomStyle) {
+        case ControleCustomStyleWhite:
+            controleStyle = 1;
+            break;
+        case ControleCustomStyleBlack:
+            controleStyle = 2;
+            break;
+        case ControleCustomStyleFree:
+            controleStyle = 99;
+            self.player.headerBackground = _headerBackground;
+            self.player.sliderMaximumTrack = _sliderMaximumTrack;
+            self.player.sliderMinimumTrack = _sliderMinimumTrack;
+            self.player.sliderCurrentThumbImage = _sliderCurrentThumbImage;
+            self.player.imgBtnQuit = _imgBtnQuit;
+            self.player.panelBackground = _panelBackground;
+            self.player.imgBtnPause = _imgBtnPause;
+            self.player.imgBtnPlay = _imgBtnPlay;
+            self.player.imgBtnNext = _imgBtnNext;
+            self.player.imgBtnPrev = _imgBtnPrev;
+            self.player.imgBtnFullScreen = _imgBtnFullScreen;
+            self.player.imgIconeSound = _imgIconeSound;
+            self.player.imgSliderTimePlay = _imgSliderTimePlay;
+            self.player.imgSliderTimeLoad = _imgSliderTimeLoad;
+            break;
+        default:
+            break;
+    }
+    
+    if (controleStyle != 0) [self.player changeControleTo:controleStyle];
+    
 }
 
 #pragma mark - Player Methode
@@ -76,7 +131,7 @@
 
 - (void)forward{[self.player forward];}
 
-- (void)okAction{[self.player okAction];}
+- (void)quitAction{[self.player quitAction];}
 
 - (void)fullScreenAction{
     
@@ -99,7 +154,7 @@
         _smallFrame = self.frame;
         
         //On récupére la position du player dans le screen
-        finalFrame = [self convertRectToAbsolutePsotion];
+        finalFrame = [self convertRectToAbsolutePosition];
         
     }
     
@@ -119,11 +174,17 @@
                          }
                          
                          if (!_isFullScreen) {
+                             
+                             //On supprime le player de la vue courant
+                             [self.player.view removeFromSuperview];
+                             
                              AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
                              UIViewController *rootViewController = appDelegate.window.rootViewController;
                              [rootViewController presentViewController:self.player animated:NO completion:nil];
+                             
                          }
                          _isFullScreen = !_isFullScreen;
+                         self.player.isFullScreen = _isFullScreen;
                      }];
     
     
@@ -134,13 +195,15 @@
 
 - (void)moviePlayerFullScreen{[self fullScreenAction];}
 
+- (void)moviePlayerDidFinish{[self.delegate moviePlayerDidFinish];}
+
+- (void)moviePlayerBtnQuitAction{[self.delegate moviePlayerBtnQuitAction];}
+
 #pragma mark - Private Functions
 
-- (CGRect)convertRectToAbsolutePsotion{
-    
+- (CGRect)convertRectToAbsolutePosition{
     
     CGRect finalFrame;
-    
     
     UIWindow* window = [[UIApplication sharedApplication] keyWindow];
     
@@ -178,7 +241,6 @@
     
     _widthScreen    = [[UIScreen mainScreen] bounds].size.width;
     _heightScreen   = [[UIScreen mainScreen] bounds].size.height;
-    
     
     if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeLeft || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeRight) {
         _heightScreen    = [[UIScreen mainScreen] bounds].size.width;

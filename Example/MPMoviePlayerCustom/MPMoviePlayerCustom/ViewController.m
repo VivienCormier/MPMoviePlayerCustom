@@ -2,7 +2,7 @@
 //  ViewController.m
 //  MPMoviePlayerCustom
 //
-//  Created by dvd on 22/05/13.
+//  Created by Vivien Cormier on 22/05/13.
 //  Copyright (c) 2013 Vivien Cormier. All rights reserved.
 //
 
@@ -18,29 +18,42 @@
 {
     [super viewDidLoad];
     
-    UIView *test = [[UIView alloc]initWithFrame:CGRectMake(50, 50, 500, 500)];
+    UIView *test = [[UIView alloc]initWithFrame:CGRectMake(10, 50, 500, 500)];
     [self.view addSubview:test];
     
-    self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(20, 50, 360, 200)];
-    self.moviePlayer.player.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
+    self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(10, 50, 280, 150)];
+    self.moviePlayer.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
     self.moviePlayer.delegate = self;
+    self.moviePlayer.title = @"Test de titre";
+//    self.moviePlayer.headerColorBackground = [UIColor greenColor];
+//    self.moviePlayer.sliderMaximumTrack = [UIImage imageNamed:@"Template_slider_maximumTrack_White"];
+//    self.moviePlayer.sliderMinimumTrack = [UIImage imageNamed:@"Template_slider_minimumTrack_White"];
+//    self.moviePlayer.sliderCurrentThumbImage = [UIImage imageNamed:@"Template_slider_Thumb_White"];
+//    self.moviePlayer.imgBtnQuit = [UIImage imageNamed:@"Template_Header_Quit_White"];
+    self.moviePlayer.controleCustomStyle = ControleCustomStyleWhite;
     [test addSubview:_moviePlayer];
+    [self.moviePlayer play];
     self.view.backgroundColor = [UIColor grayColor];
-    [self performSelector:@selector(playMovie) withObject:nil afterDelay:1];
 }
 
 - (void)playMovie{
     [self.moviePlayer play];
-    [self performSelector:@selector(step2) withObject:nil afterDelay:2];
+//    [self performSelector:@selector(step2) withObject:nil afterDelay:2];
 }
 
 - (void)step2{
     self.moviePlayer.frame = CGRectMake(0, 0, 320, 480);
 }
 
-- (void)moviePlayerBtnOkAction{
+- (void)moviePlayerBtnQuitAction{
     
     NSLog(@"Btn Ok");
+    
+}
+
+- (void)moviePlayerDidFinish{
+    
+    NSLog(@"Video Finish");
     
 }
 

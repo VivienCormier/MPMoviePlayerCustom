@@ -2,36 +2,36 @@
 //  MPMoviePlayerCustomViewController.h
 //  MPMoviePlayerCustom
 //
-//  Created by dvd on 23/05/13.
+//  Created by Vivien Cormier on 23/05/13.
 //  Copyright (c) 2013 Vivien Cormier. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "MPMoviePlayerCustomTemplate.h"
 
 @protocol MPMoviePlayerCustomControllerDelegate <NSObject>
 
 // Delegate Function
-@optional
-- (void)moviePlayerBtnOkAction;
+@required
+- (void)moviePlayerBtnQuitAction;
+- (void)moviePlayerDidFinish;
 - (void)moviePlayerFullScreen;
 @end
 
 @interface MPMoviePlayerCustomViewController : UIViewController
 
+//
 //Ready-only
-@property (nonatomic, readonly) NSTimer *timerUpdate;
-@property (nonatomic, readonly) BOOL sliderTimeIsTouch;
-@property (nonatomic, readonly) BOOL sliderVolumeIsTouch;
-@property (nonatomic, readonly) BOOL controlsIsHidden;
-@property (nonatomic, readonly) BOOL isFullScreen;
+//
+@property (nonatomic, readwrite) BOOL isFullScreen;
 @property (nonatomic, readonly) UIView *wrapperControls;
 @property (nonatomic, readonly) UIView *zoneTouchControls;
 @property (nonatomic, readonly) MPMoviePlayerCustomViewController *wrapperFullScreen;
-@property (nonatomic, readonly) MPMusicPlayerController *sound;
-@property (nonatomic, readonly) CGRect smallFrame;
-@property (nonatomic, readonly) int heightScreen;
-@property (nonatomic, readonly) int widthScreen;
+@property (nonatomic, readonly) MPMoviePlayerCustomTemplate *playerTemplate;
+// Header
+@property (nonatomic, readonly) UIView *header;
+@property (nonatomic, readonly) UISlider *sliderTime;
 
 //
 // Movie Player
@@ -43,37 +43,65 @@
 
 @property (nonatomic, strong) NSString *url;
 
-@property (nonatomic, readwrite) NSUInteger controleCustomStyle;
+@property (nonatomic, strong) NSString *titleMovie;
+
+@property (nonatomic, readwrite) int controleCustomStyle;
 
 //
 // Header
 //
 
-@property (nonatomic, strong) UIView *header;
+@property (nonatomic, readwrite) UIImage *headerBackground;
 
-@property (nonatomic, strong) UISlider *sliderTime;
+@property (nonatomic, readwrite) UILabel *headerTitle;
 
-@property (nonatomic, strong) UIButton *btnOk;
-@property (nonatomic, strong) UIButton *btnFullScreen;
+@property (nonatomic, readwrite) UIColor *headerTextColor;
 
-@property (nonatomic, strong) UIImage *imgBtnOk;
-@property (nonatomic, strong) UIImage *imgBtnFullScreen;
+@property (nonatomic, readwrite) UIFont *headerTextFont;
+
+@property (nonatomic, strong) UIImage *imgBtnQuit;
 
 //
 // Panel
 //
 
-@property (nonatomic, strong) UIView *panel;
+@property (nonatomic, readwrite) UIImage *panelBackground;
+
+@property (nonatomic, strong) UIImage *imgBtnPlay;
+
+@property (nonatomic, strong) UIImage *imgBtnPause;
+
+@property (nonatomic, strong) UIImage *imgBtnPrev;
+
+@property (nonatomic, strong) UIImage *imgBtnNext;
+
+@property (nonatomic, strong) UIImage *imgBtnFullScreen;
+
+@property (nonatomic, strong) UIImageView *iconeSound;
+
+@property (nonatomic, strong) UIImage *imgIconeSound;
+
+@property (nonatomic, strong) UIImage *imgSliderTimePlay;
+
+@property (nonatomic, strong) UIImage *imgSliderTimeLoad;
+
+
+
+@property (nonatomic, readwrite) UIImage *sliderMinimumTrack;
+
+@property (nonatomic, readwrite) UIImage *sliderMaximumTrack;
+
+@property (nonatomic, readwrite) UIImage *sliderCurrentThumbImage;
+
+
+
+
 
 @property (nonatomic, strong) UISlider *sliderVolume;
 
-@property (nonatomic, strong) UIButton *btnPlayPause;
-@property (nonatomic, strong) UIButton *btnBackward;
-@property (nonatomic, strong) UIButton *btnForward;
 
-@property (nonatomic, strong) UIImage *imgBtnPlay;
-@property (nonatomic, strong) UIImage *imgBtnPause;
-@property (nonatomic, strong) UIImage *imgBtnBackward;
+
+
 @property (nonatomic, strong) UIImage *imgBtnForward;
 
 
@@ -87,11 +115,13 @@
 
 - (void)setFrame:(CGRect)frame;
 
+- (void)changeControleTo:(int)controleCustomStyle;
+
 - (void)backward;
 
 - (void)forward;
 
-- (void)okAction;
+- (void)quitAction;
 
 - (void)fullScreenAction;
 
@@ -100,6 +130,5 @@
 - (void)pause;
 
 - (void)stop;
-
 
 @end
