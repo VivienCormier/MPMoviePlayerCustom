@@ -20,6 +20,14 @@
 @property (nonatomic, readwrite) CGRect smallFrame;
 @property (nonatomic, readwrite) int heightScreen;
 @property (nonatomic, readwrite) int widthScreen;
+@property (nonatomic, readwrite) UIButton *btnQuit;
+@property (nonatomic, strong) UIView *panel;
+@property (nonatomic, strong) UIButton *btnPlayPause;
+@property (nonatomic, strong) UIButton *btnBackward;
+@property (nonatomic, strong) UIButton *btnForward;
+@property (nonatomic, strong) UIButton *btnFullScreen;
+@property (nonatomic, strong) UIView *sliderTimePlay;
+@property (nonatomic, strong) UIView *sliderTimeLoad;
 
 @end
 
@@ -27,14 +35,13 @@
 
 @synthesize delegate;
 
-int btnOkWidth = 40;
-int btnScaleWidth = 40;
+int btnQuitWidth = 50;
+int btnFullScreen  = 50;
 int headerHeight = 50;
-int panelWidthMin = 200;
-int btnPlayPauseWidth = 32;
-int btnBackwardWidth = 32;
-int btnForwardWidth = 32;
-NSString *nameImgBtnOk = @"btnOk";
+int panelHeight = 93;
+int btnPanelHeight = 39;
+int btnPanelWidth = 35;
+int minSize = 300;
 NSString *nameImgBtnFullScreen = @"btnFullScreen";
 NSString *nameImgBtnPlay = @"btnPlay";
 NSString *nameImgBtnPause = @"btnPause";
@@ -44,7 +51,7 @@ NSString *nameImgBtnForward = @"btnForward";
 - (id)initWithFrame:(CGRect)frame
 {
     if (self) {
-        // Initialization code
+        
         self.view.frame         = CGRectMake(0, 0, frame.size.width, frame.size.height);
         self.player             = [[MPMoviePlayerController alloc] init];
         self.player.view.frame  = CGRectMake(0, 0, frame.size.width, frame.size.height);
@@ -62,7 +69,7 @@ NSString *nameImgBtnForward = @"btnForward";
 - (id)initWithFrame:(CGRect)frame AndUrl:(NSString *)url{
     
     if (self) {
-        // Initialization code
+        
         self.view.frame         = CGRectMake(0, 0, frame.size.width, frame.size.height);
         self.player             = [[MPMoviePlayerController alloc] initWithContentURL:[NSURL URLWithString:url]];
         self.player.view.frame  = CGRectMake(0, 0, frame.size.width, frame.size.height);
@@ -90,6 +97,7 @@ NSString *nameImgBtnForward = @"btnForward";
     [self initParams];
     [self loadControls];
     [self.view addSubview:_wrapperControls];
+    
     return self;
 }
 
@@ -129,49 +137,26 @@ NSString *nameImgBtnForward = @"btnForward";
     
     [self initControls];
     
+    [self.sliderTime setMaximumTrackImage:[UIImage alloc] forState:UIControlStateNormal];
+    [self.sliderTime setThumbImage:[UIImage alloc] forState:UIControlStateNormal];
+    [self.sliderTime setMinimumTrackImage:[UIImage alloc] forState:UIControlStateNormal];
+    
     //
-    // Params
+    // Params Template
     //
     
-    [_playerTemplate customHeader:_header forControleCustomStyle:_controleCustomStyle custom:_headerColorBackground];
-    
-    [_playerTemplate customSliderTime:_sliderTime forControleCustomStyle:_controleCustomStyle customMaximumTrack:_sliderMaximumTrack minimumTrack:_sliderMinimumTrack AndCurrentThumb:_sliderCurrentThumbImage];
-    
-    if (_controleCustomStyle == 0 || _controleCustomStyle == 1) {
-        
-        self.imgBtnOk   = [UIImage imageNamed:nameImgBtnOk];
-        
-        self.imgBtnFullScreen       = [UIImage imageNamed:nameImgBtnFullScreen];
-        
-        self.panel.backgroundColor  = [UIColor whiteColor];
-        
-        self.imgBtnPlay     = [UIImage imageNamed:nameImgBtnPlay];
-        self.imgBtnPause    = [UIImage imageNamed:nameImgBtnPause];
-        
-        self.imgBtnBackward = [UIImage imageNamed:nameImgBtnBackward];
-        
-        self.imgBtnForward  = [UIImage imageNamed:nameImgBtnForward];
-        
-        self.sliderVolume.backgroundColor   = [UIColor whiteColor];
-        
-    }else if (_controleCustomStyle == 2){
-        
-        self.imgBtnOk   = [UIImage imageNamed:nameImgBtnOk];
-        
-        self.imgBtnFullScreen       = [UIImage imageNamed:nameImgBtnFullScreen];
-        
-        self.panel.backgroundColor  = [UIColor blackColor];
-        
-        self.imgBtnPlay     = [UIImage imageNamed:nameImgBtnPlay];
-        self.imgBtnPause    = [UIImage imageNamed:nameImgBtnPause];
-        
-        self.imgBtnBackward = [UIImage imageNamed:nameImgBtnBackward];
-        
-        self.imgBtnForward  = [UIImage imageNamed:nameImgBtnForward];
-        
-        self.sliderVolume.backgroundColor   = [UIColor blackColor];
-        
-    }
+    [_playerTemplate customHeader:_header forControleCustomStyle:_controleCustomStyle custom:_headerBackground];
+//    [_playerTemplate customSliderTime:_sliderTime forControleCustomStyle:_controleCustomStyle customMaximumTrack:_sliderMaximumTrack minimumTrack:_sliderMinimumTrack AndCurrentThumb:_sliderCurrentThumbImage];
+    [_playerTemplate customHeaderTitle:_headerTitle forControleCustomStyle:_controleCustomStyle customColor:_headerTextColor customFont:_headerTextFont];
+    [_playerTemplate customBtnQuit:_btnQuit forControleCustomStyle:_controleCustomStyle customImage:_imgBtnQuit];
+    [_playerTemplate customPanel:_panel forControleCustomStyle:_controleCustomStyle custom:_panelBackground];
+    [_playerTemplate customBtnPlay:_btnPlayPause forControleCustomStyle:_controleCustomStyle customImage:_imgBtnPlay];
+    [_playerTemplate customBtnNext:_btnForward forControleCustomStyle:_controleCustomStyle customImage:_imgBtnNext];
+    [_playerTemplate customBtnPrev:_btnBackward forControleCustomStyle:_controleCustomStyle customImage:_imgBtnPrev];
+    [_playerTemplate customBtnFullScreen:_btnFullScreen forControleCustomStyle:_controleCustomStyle customImage:_imgBtnFullScreen];
+    [_playerTemplate customIconeSound:_iconeSound forControleCustomStyle:_controleCustomStyle customImage:_imgIconeSound];
+    [_playerTemplate customSliderTimePlay:_sliderTimePlay forControleCustomStyle:_controleCustomStyle custom:_imgSliderTimePlay];
+    [_playerTemplate customSliderTimeLoad:_sliderTimeLoad forControleCustomStyle:_controleCustomStyle custom:_imgSliderTimeLoad];
     
     
     //
@@ -179,27 +164,20 @@ NSString *nameImgBtnForward = @"btnForward";
     //
     
     [self.wrapperControls addSubview:_header];
-    
-    [self.header addSubview:_sliderTime];
-    
-    [self.btnOk setImage:_imgBtnOk forState:UIControlStateNormal];
-    [self.header addSubview:_btnOk];
-    
-    [self.btnFullScreen setImage:_imgBtnFullScreen forState:UIControlStateNormal];
-    [self.header addSubview:_btnFullScreen];
-    
+    [self.header addSubview:_headerTitle];
+    [self.header addSubview:_btnQuit];
     [self.wrapperControls addSubview:_panel];
     
-    [self.panel addSubview:_sliderVolume];
+//    [self.panel addSubview:_sliderVolume];
     
-    [self.btnPlayPause setImage:_imgBtnPlay forState:UIControlStateNormal];
     [self.panel addSubview:_btnPlayPause];
-    
-    [self.btnBackward setImage:_imgBtnBackward forState:UIControlStateNormal];
     [self.panel addSubview:_btnBackward];
-    
-    [self.btnForward setImage:_imgBtnForward forState:UIControlStateNormal];
     [self.panel addSubview:_btnForward];
+    [self.panel addSubview:_btnFullScreen];
+    [self.panel addSubview:_iconeSound];
+    [self.panel addSubview:_sliderTimeLoad];
+    [self.panel addSubview:_sliderTimePlay];
+    [self.panel addSubview:_sliderTime];
     
     // On mets en place les éléments
     [self setFrame:self.view.frame];
@@ -208,35 +186,43 @@ NSString *nameImgBtnForward = @"btnForward";
 
 #pragma mark - Setters
 
-- (void)setUrl:(NSString *)url{self.player.contentURL = [NSURL URLWithString:url];}
+- (void)setUrl:(NSString *)url{
+    _url = url;
+    self.player.contentURL = [NSURL URLWithString:url];
+}
 
 - (void)setFrame:(CGRect)frame{
     
+    int corrctionMinSize = 0;
+    if (frame.size.width < minSize) {corrctionMinSize = (minSize - frame.size.width);}
     self.view.frame             = CGRectMake(0, 0, frame.size.width, frame.size.height);
     self.player.view.frame      = CGRectMake(0, 0, frame.size.width, frame.size.height);
     self.wrapperControls.frame  = CGRectMake(0, 0, frame.size.width, frame.size.height);
     _zoneTouchControls.frame    = CGRectMake(0, 0, frame.size.width, frame.size.height);
-    self.sliderTime.frame       = CGRectMake(btnOkWidth, (headerHeight - 30) / 2, frame.size.width - ( btnOkWidth +btnScaleWidth ) , 30);
-    self.btnOk.frame            = CGRectMake(0, (headerHeight - 30) / 2, btnOkWidth, 30);
-    self.btnFullScreen.frame    = CGRectMake(frame.size.width - btnScaleWidth, (headerHeight - 30) / 2, btnScaleWidth, 30);
-    int pannelWidth;
-    if (self.view.frame.size.width > panelWidthMin) {
-        pannelWidth             = panelWidthMin + (frame.size.width - panelWidthMin) * 0.6;
-    }else{
-        pannelWidth             = panelWidthMin;
-    }
-    if (_controlsIsHidden) {
+    self.headerTitle.frame      = CGRectMake( 18 - corrctionMinSize * 0.5, 0, frame.size.width - 23 - btnQuitWidth, 50);
+    self.btnQuit.frame          = CGRectMake(frame.size.width - btnQuitWidth, 0, btnQuitWidth, 50);
+    if (_controlsIsHidden){
         self.header.frame       = CGRectMake(0, - headerHeight, frame.size.width, headerHeight);
-        self.panel.frame        = CGRectMake((frame.size.width - pannelWidth)/2, frame.size.height, pannelWidth, 70);
+        self.panel.frame        = CGRectMake(0, frame.size.height, frame.size.width, panelHeight);
     }else{
         self.header.frame       = CGRectMake(0, 0, frame.size.width, headerHeight);
-        self.panel.frame        = CGRectMake((frame.size.width - pannelWidth)/2, frame.size.height - 70, pannelWidth, 70);
+        self.panel.frame        = CGRectMake(0, frame.size.height - panelHeight, frame.size.width, panelHeight);
     }
-    self.btnPlayPause.frame     = CGRectMake( (pannelWidth - btnPlayPauseWidth) / 2, self.panel.frame.size.height * 0.1, btnPlayPauseWidth, 32);
-    self.btnBackward.frame      = CGRectMake(pannelWidth * 0.3, self.panel.frame.size.height * 0.1, btnBackwardWidth, 32);
-    self.btnForward.frame       = CGRectMake((pannelWidth * 0.7) - btnForwardWidth, self.panel.frame.size.height * 0.1, btnForwardWidth, 32);
-    self.sliderVolume.frame     = CGRectMake(15, (self.panel.frame.size.height - 30), pannelWidth - 30, 30);
+    self.btnPlayPause.frame     = CGRectMake( (frame.size.width - btnPanelWidth) / 2, 43, btnPanelWidth, btnPanelHeight);
+    self.btnBackward.frame      = CGRectMake(((frame.size.width - btnPanelWidth) / 2) - btnPanelWidth -  15 + corrctionMinSize * 0.5, 43, btnPanelWidth, btnPanelHeight);
+    self.btnForward.frame       = CGRectMake(((frame.size.width - btnPanelWidth) / 2) + btnPanelWidth + 15 - corrctionMinSize * 0.5, 43, btnPanelWidth, btnPanelHeight);
+    self.btnFullScreen.frame    = CGRectMake(frame.size.width - btnFullScreen, panelHeight - btnFullScreen - 7, btnFullScreen, btnFullScreen);
+    self.iconeSound.frame       = CGRectMake(23 - corrctionMinSize * 0.5, 51, 25, 25);
+    [self sliderTimePlaySize];
+    [self sliderTimeLoadSize];
+    self.sliderTime.frame       = CGRectMake(0, 12, frame.size.width, 20);
+//    self.sliderVolume.frame     = CGRectMake(0, 0, frame.size.width, 30);
     
+}
+
+- (void)setTitleMovie:(NSString *)titleMovie{
+    _titleMovie = titleMovie;
+    self.headerTitle.text = titleMovie;
 }
 
 #pragma mark - Player Methode
@@ -277,9 +263,9 @@ NSString *nameImgBtnForward = @"btnForward";
     [self.player beginSeekingForward];
 }
 
-- (void)okAction{
+- (void)quitAction{
     if (!_controlsIsHidden) [self resetTimerControls];
-    [self.delegate moviePlayerBtnOkAction];
+    [self.delegate moviePlayerBtnQuitAction];
 }
 
 -(void)finishPlay{
@@ -312,6 +298,12 @@ NSString *nameImgBtnForward = @"btnForward";
     _header             = nil;
     _header             = [[UIView alloc]init];
     
+    [self.headerTitle removeFromSuperview];
+    self.headerTitle                    = nil;
+    self.headerTitle                    = [[UILabel alloc]init];
+    self.headerTitle.backgroundColor    = [UIColor clearColor];
+    self.headerTitle.text               = _titleMovie;
+    
     [self.sliderTime removeFromSuperview];
     _sliderTime             = nil;
     _sliderTime             = [[UISlider alloc]init];
@@ -319,10 +311,10 @@ NSString *nameImgBtnForward = @"btnForward";
     [self.sliderTime addTarget:self action:@selector(sliderTimeDown) forControlEvents:UIControlEventTouchDown];
     [self.sliderTime addTarget:self action:@selector(sliderTimeUp) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.btnOk removeFromSuperview];
-    self.btnOk              = nil;
-    self.btnOk              = [[UIButton alloc]init];
-    [self.btnOk addTarget:self action:@selector(okAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.btnQuit removeFromSuperview];
+    self.btnQuit              = nil;
+    self.btnQuit              = [[UIButton alloc]init];
+    [self.btnQuit addTarget:self action:@selector(quitAction) forControlEvents:UIControlEventTouchUpInside];
     
     [self.btnFullScreen removeFromSuperview];
     self.btnFullScreen      = nil;
@@ -348,6 +340,18 @@ NSString *nameImgBtnForward = @"btnForward";
     self.btnForward         = [[UIButton alloc]init];
     [self.btnForward addTarget:self action:@selector(forward) forControlEvents:UIControlEventTouchUpInside];
     
+    [self.iconeSound removeFromSuperview];
+    self.iconeSound              = nil;
+    self.iconeSound              = [[UIImageView alloc]init];
+    
+    [self.sliderTimePlay removeFromSuperview];
+    self.sliderTimePlay              = nil;
+    self.sliderTimePlay              = [[UIView alloc]init];
+    
+    [self.sliderTimeLoad removeFromSuperview];
+    self.sliderTimeLoad              = nil;
+    self.sliderTimeLoad              = [[UIView alloc]init];
+    
     [self.sliderVolume removeFromSuperview];
     self.sliderVolume       = nil;
     self.sliderVolume       = [[UISlider alloc]init];
@@ -368,6 +372,9 @@ NSString *nameImgBtnForward = @"btnForward";
         }
     }
     
+    [self sliderTimeLoadSize];
+    [self sliderTimePlaySize];
+    
     // Si le volume à changé
     if (!_sliderVolumeIsTouch) {
         self.sliderVolume.value = self.sound.volume;
@@ -375,12 +382,13 @@ NSString *nameImgBtnForward = @"btnForward";
     
     //Status Btn Play/Pause
     if (self.player.playbackState == MPMoviePlaybackStatePlaying) {
-        [self.btnPlayPause setImage:_imgBtnPause forState:UIControlStateNormal];
+        [_playerTemplate customBtnPause:_btnPlayPause forControleCustomStyle:_controleCustomStyle customImage:_imgBtnPause];
         [self.btnPlayPause addTarget:self action:@selector(pause) forControlEvents:UIControlEventTouchUpInside];
     }else{
-        [self.btnPlayPause setImage:_imgBtnPlay forState:UIControlStateNormal];
+        [_playerTemplate customBtnPlay:_btnPlayPause forControleCustomStyle:_controleCustomStyle customImage:_imgBtnPlay];
         [self.btnPlayPause addTarget:self action:@selector(play) forControlEvents:UIControlEventTouchUpInside];
     }
+    
 }
 
 - (void)sliderTimeDown{
@@ -423,8 +431,8 @@ NSString *nameImgBtnForward = @"btnForward";
         // On affiche les controls
         [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction
                          animations:^{
-                             self.header.frame = CGRectMake(0,0, self.header.frame.size.width, self.header.frame.size.height);
-                             self.panel.frame = CGRectMake( self.panel.frame.origin.x, heightSelf - 70, self.panel.frame.size.width, self.panel.frame.size.height);
+                             self.header.frame = CGRectMake( 0, 0, self.header.frame.size.width, self.header.frame.size.height);
+                             self.panel.frame = CGRectMake( 0, heightSelf - panelHeight, self.panel.frame.size.width, panelHeight);
                          }
                          completion:^(BOOL finished) {
                              _controlsIsHidden = !_controlsIsHidden;
@@ -439,8 +447,8 @@ NSString *nameImgBtnForward = @"btnForward";
         
         [UIView animateWithDuration:0.4 delay:0.0f options:UIViewAnimationOptionAllowUserInteraction
                          animations:^{
-                             self.header.frame = CGRectMake(0, - headerHeight, self.header.frame.size.width, self.header.frame.size.height);
-                             self.panel.frame = CGRectMake( self.panel.frame.origin.x, heightSelf, self.panel.frame.size.width, self.panel.frame.size.height);
+                             self.header.frame = CGRectMake( 0, - headerHeight, self.header.frame.size.width, self.header.frame.size.height);
+                             self.panel.frame = CGRectMake( 0, heightSelf, self.panel.frame.size.width, panelHeight);
                          }
                          completion:^(BOOL finished) {
                              _controlsIsHidden = !_controlsIsHidden;
@@ -475,9 +483,19 @@ NSString *nameImgBtnForward = @"btnForward";
     
 }
 
+- (void)sliderTimePlaySize{
+    self.sliderTimePlay.frame = CGRectMake(0, 25, self.panel.frame.size.width * _sliderTime.value, 8);
+}
+
+- (void)sliderTimeLoadSize{
+    if (_player.playableDuration / _player.duration > 0) {
+        self.sliderTimeLoad.frame = CGRectMake(0, 25, self.panel.frame.size.width * _player.playableDuration / _player.duration, 8);
+    }
+}
+
 #pragma mark - - Rotation
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     
     if ( UIInterfaceOrientationIsPortrait(toInterfaceOrientation))
     {
@@ -493,13 +511,11 @@ NSString *nameImgBtnForward = @"btnForward";
     
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    
 }
 
-- (BOOL)shouldAutorotate {
+- (BOOL)shouldAutorotate{
     return YES;
 }
 

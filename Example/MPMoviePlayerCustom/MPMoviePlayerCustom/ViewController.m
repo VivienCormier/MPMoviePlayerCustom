@@ -21,14 +21,16 @@
     UIView *test = [[UIView alloc]initWithFrame:CGRectMake(10, 50, 500, 500)];
     [self.view addSubview:test];
     
-    self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(10, 50, 300, 200)];
-    self.moviePlayer.player.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
+    self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(10, 50, 280, 150)];
+    self.moviePlayer.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
     self.moviePlayer.delegate = self;
-    self.moviePlayer.headerColorBackground = [UIColor greenColor];
-    self.moviePlayer.sliderMaximumTrack = [UIImage imageNamed:@"Template_slider_maximumTrack_White"];
-    self.moviePlayer.sliderMinimumTrack = [UIImage imageNamed:@"Template_slider_minimumTrack_White"];
-    self.moviePlayer.sliderCurrentThumbImage = [UIImage imageNamed:@"Template_slider_Thumb_White"];
-    self.moviePlayer.controleCustomStyle = ControleCustomStyleFree;
+    self.moviePlayer.title = @"Test de titre";
+//    self.moviePlayer.headerColorBackground = [UIColor greenColor];
+//    self.moviePlayer.sliderMaximumTrack = [UIImage imageNamed:@"Template_slider_maximumTrack_White"];
+//    self.moviePlayer.sliderMinimumTrack = [UIImage imageNamed:@"Template_slider_minimumTrack_White"];
+//    self.moviePlayer.sliderCurrentThumbImage = [UIImage imageNamed:@"Template_slider_Thumb_White"];
+//    self.moviePlayer.imgBtnQuit = [UIImage imageNamed:@"Template_Header_Quit_White"];
+    self.moviePlayer.controleCustomStyle = ControleCustomStyleWhite;
     [test addSubview:_moviePlayer];
     [self.moviePlayer play];
     self.view.backgroundColor = [UIColor grayColor];
@@ -43,7 +45,7 @@
     self.moviePlayer.frame = CGRectMake(0, 0, 320, 480);
 }
 
-- (void)moviePlayerBtnOkAction{
+- (void)moviePlayerBtnQuitAction{
     
     NSLog(@"Btn Ok");
     

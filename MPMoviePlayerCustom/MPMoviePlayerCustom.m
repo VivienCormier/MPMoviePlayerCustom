@@ -13,9 +13,9 @@
 
 @property (nonatomic, readonly) int heightScreen;
 @property (nonatomic, readonly) int widthScreen;
-@property (nonatomic, readonly) BOOL isFullScreen;
 @property (nonatomic, readonly) CGRect smallFrame;
 @property (nonatomic, readonly) BOOL statusBarisHidden;
+@property (nonatomic, strong) MPMoviePlayerCustomViewController *player;
 
 @end
 
@@ -68,11 +68,55 @@
 
 #pragma mark - Setters
 
-- (void)setUrl:(NSString *)url{[self.player setUrl:url];}
+- (void)setUrl:(NSString *)url{
+    _url = url;
+    [self.player setUrl:url];
+}
+
+- (void)setTitle:(NSString *)title{
+    _title = title;
+    self.player.titleMovie = title;
+}
 
 - (void)setFrame:(CGRect)frame{
     [super setFrame:frame];
     [self.player setFrame:frame];
+}
+
+- (void)setControleCustomStyle:(ControleCustomStyle)controleCustomStyle{
+    
+    int controleStyle = 0;
+    
+    switch (controleCustomStyle) {
+        case ControleCustomStyleWhite:
+            controleStyle = 1;
+            break;
+        case ControleCustomStyleBlack:
+            controleStyle = 2;
+            break;
+        case ControleCustomStyleFree:
+            controleStyle = 99;
+            self.player.headerBackground = _headerBackground;
+            self.player.sliderMaximumTrack = _sliderMaximumTrack;
+            self.player.sliderMinimumTrack = _sliderMinimumTrack;
+            self.player.sliderCurrentThumbImage = _sliderCurrentThumbImage;
+            self.player.imgBtnQuit = _imgBtnQuit;
+            self.player.panelBackground = _panelBackground;
+            self.player.imgBtnPause = _imgBtnPause;
+            self.player.imgBtnPlay = _imgBtnPlay;
+            self.player.imgBtnNext = _imgBtnNext;
+            self.player.imgBtnPrev = _imgBtnPrev;
+            self.player.imgBtnFullScreen = _imgBtnFullScreen;
+            self.player.imgIconeSound = _imgIconeSound;
+            self.player.imgSliderTimePlay = _imgSliderTimePlay;
+            self.player.imgSliderTimeLoad = _imgSliderTimeLoad;
+            break;
+        default:
+            break;
+    }
+    
+    if (controleStyle != 0) [self.player changeControleTo:controleStyle];
+    
 }
 
 #pragma mark - Player Methode
@@ -87,7 +131,7 @@
 
 - (void)forward{[self.player forward];}
 
-- (void)okAction{[self.player okAction];}
+- (void)quitAction{[self.player quitAction];}
 
 - (void)fullScreenAction{
     
@@ -110,7 +154,7 @@
         _smallFrame = self.frame;
         
         //On récupére la position du player dans le screen
-        finalFrame = [self convertRectToAbsolutePsotion];
+        finalFrame = [self convertRectToAbsolutePosition];
         
     }
     
@@ -147,43 +191,17 @@
 
 }
 
-- (void)setControleCustomStyle:(ControleCustomStyle)controleCustomStyle{
-    
-    int controleStyle = 0;
-    
-    switch (controleCustomStyle) {
-        case ControleCustomStyleWhite:
-            controleStyle = 1;
-            break;
-        case ControleCustomStyleBlack:
-            controleStyle = 2;
-            break;
-        case ControleCustomStyleFree:
-            controleStyle = 99;
-            self.player.headerColorBackground = _headerColorBackground;
-            self.player.sliderMaximumTrack = _sliderMaximumTrack;
-            self.player.sliderMinimumTrack = _sliderMinimumTrack;
-            self.player.sliderCurrentThumbImage = _sliderCurrentThumbImage;
-            break;
-        default:
-            break;
-    }
-    
-    if (controleStyle != 0) [self.player changeControleTo:controleStyle];
-    
-}
-
 #pragma mark - Delegate MPMoviePlayerCustomController
 
 - (void)moviePlayerFullScreen{[self fullScreenAction];}
 
 - (void)moviePlayerDidFinish{[self.delegate moviePlayerDidFinish];}
 
-- (void)moviePlayerBtnOkAction{[self.delegate moviePlayerBtnOkAction];}
+- (void)moviePlayerBtnQuitAction{[self.delegate moviePlayerBtnQuitAction];}
 
 #pragma mark - Private Functions
 
-- (CGRect)convertRectToAbsolutePsotion{
+- (CGRect)convertRectToAbsolutePosition{
     
     CGRect finalFrame;
     

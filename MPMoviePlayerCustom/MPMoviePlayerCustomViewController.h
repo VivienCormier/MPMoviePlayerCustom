@@ -14,7 +14,7 @@
 
 // Delegate Function
 @required
-- (void)moviePlayerBtnOkAction;
+- (void)moviePlayerBtnQuitAction;
 - (void)moviePlayerDidFinish;
 - (void)moviePlayerFullScreen;
 @end
@@ -43,13 +43,49 @@
 
 @property (nonatomic, strong) NSString *url;
 
+@property (nonatomic, strong) NSString *titleMovie;
+
 @property (nonatomic, readwrite) int controleCustomStyle;
 
 //
 // Header
 //
 
-@property (nonatomic, readwrite) UIColor *headerColorBackground;
+@property (nonatomic, readwrite) UIImage *headerBackground;
+
+@property (nonatomic, readwrite) UILabel *headerTitle;
+
+@property (nonatomic, readwrite) UIColor *headerTextColor;
+
+@property (nonatomic, readwrite) UIFont *headerTextFont;
+
+@property (nonatomic, strong) UIImage *imgBtnQuit;
+
+//
+// Panel
+//
+
+@property (nonatomic, readwrite) UIImage *panelBackground;
+
+@property (nonatomic, strong) UIImage *imgBtnPlay;
+
+@property (nonatomic, strong) UIImage *imgBtnPause;
+
+@property (nonatomic, strong) UIImage *imgBtnPrev;
+
+@property (nonatomic, strong) UIImage *imgBtnNext;
+
+@property (nonatomic, strong) UIImage *imgBtnFullScreen;
+
+@property (nonatomic, strong) UIImageView *iconeSound;
+
+@property (nonatomic, strong) UIImage *imgIconeSound;
+
+@property (nonatomic, strong) UIImage *imgSliderTimePlay;
+
+@property (nonatomic, strong) UIImage *imgSliderTimeLoad;
+
+
 
 @property (nonatomic, readwrite) UIImage *sliderMinimumTrack;
 
@@ -61,27 +97,11 @@
 
 
 
-@property (nonatomic, strong) UIButton *btnOk;
-@property (nonatomic, strong) UIButton *btnFullScreen;
-
-@property (nonatomic, strong) UIImage *imgBtnOk;
-@property (nonatomic, strong) UIImage *imgBtnFullScreen;
-
-//
-// Panel
-//
-
-@property (nonatomic, strong) UIView *panel;
-
 @property (nonatomic, strong) UISlider *sliderVolume;
 
-@property (nonatomic, strong) UIButton *btnPlayPause;
-@property (nonatomic, strong) UIButton *btnBackward;
-@property (nonatomic, strong) UIButton *btnForward;
 
-@property (nonatomic, strong) UIImage *imgBtnPlay;
-@property (nonatomic, strong) UIImage *imgBtnPause;
-@property (nonatomic, strong) UIImage *imgBtnBackward;
+
+
 @property (nonatomic, strong) UIImage *imgBtnForward;
 
 
@@ -101,7 +121,7 @@
 
 - (void)forward;
 
-- (void)okAction;
+- (void)quitAction;
 
 - (void)fullScreenAction;
 
