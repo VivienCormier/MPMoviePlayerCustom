@@ -41,6 +41,10 @@
 		AD71B66B174E26FC0082BD75 /* btnBackward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AD71B667174E26FC0082BD75 /* btnBackward@2x.png */; };
 		AD71B66C174E26FC0082BD75 /* btnForward.png in Resources */ = {isa = PBXBuildFile; fileRef = AD71B668174E26FC0082BD75 /* btnForward.png */; };
 		AD71B66D174E26FC0082BD75 /* btnForward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AD71B669174E26FC0082BD75 /* btnForward@2x.png */; };
+		AD8CB6F4178EF0C500B59EDE /* Template_cursor_Background_White.png in Resources */ = {isa = PBXBuildFile; fileRef = AD8CB6F2178EF0C500B59EDE /* Template_cursor_Background_White.png */; };
+		AD8CB6F5178EF0C500B59EDE /* Template_cursor_Background_White@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AD8CB6F3178EF0C500B59EDE /* Template_cursor_Background_White@2x.png */; };
+		AD8CB6F8178EF61F00B59EDE /* Template_cursor_Pointer_White.png in Resources */ = {isa = PBXBuildFile; fileRef = AD8CB6F6178EF61F00B59EDE /* Template_cursor_Pointer_White.png */; };
+		AD8CB6F9178EF61F00B59EDE /* Template_cursor_Pointer_White@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AD8CB6F7178EF61F00B59EDE /* Template_cursor_Pointer_White@2x.png */; };
 		AD9D0F29178DA95B00FEE0D9 /* Template_Panel_Background_White.png in Resources */ = {isa = PBXBuildFile; fileRef = AD9D0F27178DA95B00FEE0D9 /* Template_Panel_Background_White.png */; };
 		AD9D0F2A178DA95B00FEE0D9 /* Template_Panel_Background_White@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AD9D0F28178DA95B00FEE0D9 /* Template_Panel_Background_White@2x.png */; };
 		AD9D0F33178DAF8700FEE0D9 /* Template_Panel_Next.png in Resources */ = {isa = PBXBuildFile; fileRef = AD9D0F2B178DAF8700FEE0D9 /* Template_Panel_Next.png */; };
@@ -59,6 +63,7 @@
 		AD9D0F4E178EB4B200FEE0D9 /* Template_Panel_SliderTimePlay_White@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AD9D0F4C178EB4B200FEE0D9 /* Template_Panel_SliderTimePlay_White@2x.png */; };
 		AD9D0F51178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White.png in Resources */ = {isa = PBXBuildFile; fileRef = AD9D0F4F178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White.png */; };
 		AD9D0F52178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AD9D0F50178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White@2x.png */; };
+		AD9D0F55178EDAAE00FEE0D9 /* MPMoviePlayerCustomCursor.m in Sources */ = {isa = PBXBuildFile; fileRef = AD9D0F54178EDAAE00FEE0D9 /* MPMoviePlayerCustomCursor.m */; };
 		ADA3EF2E178DA12C0090424D /* Template_Header_Background_White.png in Resources */ = {isa = PBXBuildFile; fileRef = ADA3EF2A178DA12C0090424D /* Template_Header_Background_White.png */; };
 		ADA3EF2F178DA12C0090424D /* Template_Header_Background_White@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ADA3EF2B178DA12C0090424D /* Template_Header_Background_White@2x.png */; };
 		ADA3EF30178DA12C0090424D /* Template_Header_Quit_White.png in Resources */ = {isa = PBXBuildFile; fileRef = ADA3EF2C178DA12C0090424D /* Template_Header_Quit_White.png */; };
@@ -108,6 +113,10 @@
 		AD71B667174E26FC0082BD75 /* btnBackward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btnBackward@2x.png"; path = "../../../MPMoviePlayerCustom/Vendor/btnBackward@2x.png"; sourceTree = "<group>"; };
 		AD71B668174E26FC0082BD75 /* btnForward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnForward.png; path = ../../../MPMoviePlayerCustom/Vendor/btnForward.png; sourceTree = "<group>"; };
 		AD71B669174E26FC0082BD75 /* btnForward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btnForward@2x.png"; path = "../../../MPMoviePlayerCustom/Vendor/btnForward@2x.png"; sourceTree = "<group>"; };
+		AD8CB6F2178EF0C500B59EDE /* Template_cursor_Background_White.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Template_cursor_Background_White.png; sourceTree = "<group>"; };
+		AD8CB6F3178EF0C500B59EDE /* Template_cursor_Background_White@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Template_cursor_Background_White@2x.png"; sourceTree = "<group>"; };
+		AD8CB6F6178EF61F00B59EDE /* Template_cursor_Pointer_White.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Template_cursor_Pointer_White.png; sourceTree = "<group>"; };
+		AD8CB6F7178EF61F00B59EDE /* Template_cursor_Pointer_White@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Template_cursor_Pointer_White@2x.png"; sourceTree = "<group>"; };
 		AD9D0F27178DA95B00FEE0D9 /* Template_Panel_Background_White.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Template_Panel_Background_White.png; sourceTree = "<group>"; };
 		AD9D0F28178DA95B00FEE0D9 /* Template_Panel_Background_White@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Template_Panel_Background_White@2x.png"; sourceTree = "<group>"; };
 		AD9D0F2B178DAF8700FEE0D9 /* Template_Panel_Next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Template_Panel_Next.png; sourceTree = "<group>"; };
@@ -126,6 +135,8 @@
 		AD9D0F4C178EB4B200FEE0D9 /* Template_Panel_SliderTimePlay_White@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Template_Panel_SliderTimePlay_White@2x.png"; sourceTree = "<group>"; };
 		AD9D0F4F178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Template_Panel_SliderTimeLoad_White.png; sourceTree = "<group>"; };
 		AD9D0F50178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Template_Panel_SliderTimeLoad_White@2x.png"; sourceTree = "<group>"; };
+		AD9D0F53178EDAAE00FEE0D9 /* MPMoviePlayerCustomCursor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MPMoviePlayerCustomCursor.h; path = ../../../MPMoviePlayerCustom/MPMoviePlayerCustomCursor.h; sourceTree = "<group>"; };
+		AD9D0F54178EDAAE00FEE0D9 /* MPMoviePlayerCustomCursor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MPMoviePlayerCustomCursor.m; path = ../../../MPMoviePlayerCustom/MPMoviePlayerCustomCursor.m; sourceTree = "<group>"; };
 		ADA3EF2A178DA12C0090424D /* Template_Header_Background_White.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Template_Header_Background_White.png; sourceTree = "<group>"; };
 		ADA3EF2B178DA12C0090424D /* Template_Header_Background_White@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Template_Header_Background_White@2x.png"; sourceTree = "<group>"; };
 		ADA3EF2C178DA12C0090424D /* Template_Header_Quit_White.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Template_Header_Quit_White.png; sourceTree = "<group>"; };
@@ -150,6 +161,10 @@
 		AD38B2671769CFFA00EFF27C /* Template_White */ = {
 			isa = PBXGroup;
 			children = (
+				AD8CB6F6178EF61F00B59EDE /* Template_cursor_Pointer_White.png */,
+				AD8CB6F7178EF61F00B59EDE /* Template_cursor_Pointer_White@2x.png */,
+				AD8CB6F2178EF0C500B59EDE /* Template_cursor_Background_White.png */,
+				AD8CB6F3178EF0C500B59EDE /* Template_cursor_Background_White@2x.png */,
 				AD9D0F4F178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White.png */,
 				AD9D0F50178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White@2x.png */,
 				AD9D0F4B178EB4B200FEE0D9 /* Template_Panel_SliderTimePlay_White.png */,
@@ -250,6 +265,8 @@
 				AD38B2651769C60300EFF27C /* MPMoviePlayerCustomViewController.m */,
 				AD38B2611769C22900EFF27C /* MPMoviePlayerCustomTemplate.h */,
 				AD38B2621769C22900EFF27C /* MPMoviePlayerCustomTemplate.m */,
+				AD9D0F53178EDAAE00FEE0D9 /* MPMoviePlayerCustomCursor.h */,
+				AD9D0F54178EDAAE00FEE0D9 /* MPMoviePlayerCustomCursor.m */,
 			);
 			name = MPMoviePlayerCustom;
 			sourceTree = "<group>";
@@ -328,6 +345,7 @@
 				AD9D0F34178DAF8700FEE0D9 /* Template_Panel_Next@2x.png in Resources */,
 				AD9D0F3D178E963500FEE0D9 /* Template_Panel_FullScreen.png in Resources */,
 				AD71B630174D06000082BD75 /* InfoPlist.strings in Resources */,
+				AD8CB6F8178EF61F00B59EDE /* Template_cursor_Pointer_White.png in Resources */,
 				AD71B638174D06000082BD75 /* Default.png in Resources */,
 				AD38B26F1769D0CE00EFF27C /* Template_slider_maximumTrack_White@2x.png in Resources */,
 				AD9D0F39178DAF8700FEE0D9 /* Template_Panel_Prev.png in Resources */,
@@ -337,6 +355,7 @@
 				AD9D0F3A178DAF8700FEE0D9 /* Template_Panel_Prev@2x.png in Resources */,
 				AD9D0F38178DAF8700FEE0D9 /* Template_Panel_Play@2x.png in Resources */,
 				AD71B63C174D06000082BD75 /* Default-568h@2x.png in Resources */,
+				AD8CB6F5178EF0C500B59EDE /* Template_cursor_Background_White@2x.png in Resources */,
 				AD71B642174D06000082BD75 /* ViewController_iPhone.xib in Resources */,
 				ADA3EF31178DA12C0090424D /* Template_Header_Quit_White@2x.png in Resources */,
 				AD9D0F41178EA89F00FEE0D9 /* Template_Panel_IconeSound.png in Resources */,
@@ -347,8 +366,10 @@
 				AD9D0F51178EBCCF00FEE0D9 /* Template_Panel_SliderTimeLoad_White.png in Resources */,
 				AD71B65C174E10F30082BD75 /* btnPlay.png in Resources */,
 				AD71B65D174E10F30082BD75 /* btnPlay@2x.png in Resources */,
+				AD8CB6F9178EF61F00B59EDE /* Template_cursor_Pointer_White@2x.png in Resources */,
 				AD9D0F4D178EB4B200FEE0D9 /* Template_Panel_SliderTimePlay_White.png in Resources */,
 				AD38B2721769D5BE00EFF27C /* Template_slider_Thumb_White.png in Resources */,
+				AD8CB6F4178EF0C500B59EDE /* Template_cursor_Background_White.png in Resources */,
 				AD71B660174E132C0082BD75 /* btnFullScreen.png in Resources */,
 				AD71B661174E132C0082BD75 /* btnFullScreen@2x.png in Resources */,
 				AD9D0F33178DAF8700FEE0D9 /* Template_Panel_Next.png in Resources */,
@@ -387,6 +408,7 @@
 				AD71B64D174D06310082BD75 /* MPMoviePlayerCustom.m in Sources */,
 				AD38B2661769C60300EFF27C /* MPMoviePlayerCustomViewController.m in Sources */,
 				AD38B2631769C52F00EFF27C /* MPMoviePlayerCustomTemplate.m in Sources */,
+				AD9D0F55178EDAAE00FEE0D9 /* MPMoviePlayerCustomCursor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

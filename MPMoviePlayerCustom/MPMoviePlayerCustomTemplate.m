@@ -8,6 +8,8 @@
 
 #import "MPMoviePlayerCustomTemplate.h"
 
+#import "MPMoviePlayerCustomCursor.h"
+
 @implementation MPMoviePlayerCustomTemplate
 
 #define UIColorFromRGB(rgbValue) [UIColor \
@@ -376,6 +378,48 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
             default:
                 // Default
                 sliderTimeLoad.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"Template_Panel_SliderTimeLoad_White"]];
+                break;
+        }
+    }
+    
+}
+
+- (void)customCursor:(MPMoviePlayerCustomCursor*)cursor forControleCustomStyle:(int)controleCustomStyle customBackground:(UIImage*)imgCursorBackground customPointer:(UIImage*)imgCursorPointer{
+    
+    if (imgCursorBackground != nil && controleCustomStyle == 99) {
+        cursor.imgCursorBackground = imgCursorBackground;
+    }else{
+        switch (controleCustomStyle) {
+            case 1:
+                //White
+                cursor.imgCursorBackground = [UIImage imageNamed:@"Template_cursor_Background_White"];
+                break;
+            case 2:
+                //Black
+                cursor.imgCursorBackground = [UIImage imageNamed:@"Template_cursor_Background_White"];
+                break;
+            default:
+                // Default
+                cursor.imgCursorBackground = [UIImage imageNamed:@"Template_cursor_Background_White"];
+                break;
+        }
+    }
+    
+    if (imgCursorPointer != nil && controleCustomStyle == 99) {
+        cursor.imgCursorPointer = imgCursorPointer;
+    }else{
+        switch (controleCustomStyle) {
+            case 1:
+                //White
+                cursor.imgCursorPointer = [UIImage imageNamed:@"Template_cursor_Pointer_White"];
+                break;
+            case 2:
+                //Black
+                cursor.imgCursorPointer = [UIImage imageNamed:@"Template_cursor_Pointer_White"];
+                break;
+            default:
+                // Default
+                cursor.imgCursorPointer = [UIImage imageNamed:@"Template_cursor_Pointer_White"];
                 break;
         }
     }

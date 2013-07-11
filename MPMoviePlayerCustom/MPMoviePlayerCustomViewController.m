@@ -8,26 +8,40 @@
 
 #import "MPMoviePlayerCustomViewController.h"
 #import "MPMoviePlayerCustomTemplate.h"
+#import "MPMoviePlayerCustomCursor.h"
 
 @interface MPMoviePlayerCustomViewController ()
 
-@property (nonatomic, readwrite) NSTimer *timerUpdate;
-@property (nonatomic, readwrite) NSTimer *timerControl;
-@property (nonatomic, readwrite) BOOL sliderTimeIsTouch;
-@property (nonatomic, readwrite) BOOL sliderVolumeIsTouch;
-@property (nonatomic, readwrite) BOOL controlsIsHidden;
-@property (nonatomic, readwrite) MPMusicPlayerController *sound;
-@property (nonatomic, readwrite) CGRect smallFrame;
-@property (nonatomic, readwrite) int heightScreen;
-@property (nonatomic, readwrite) int widthScreen;
-@property (nonatomic, readwrite) UIButton *btnQuit;
-@property (nonatomic, strong) UIView *panel;
-@property (nonatomic, strong) UIButton *btnPlayPause;
-@property (nonatomic, strong) UIButton *btnBackward;
-@property (nonatomic, strong) UIButton *btnForward;
-@property (nonatomic, strong) UIButton *btnFullScreen;
-@property (nonatomic, strong) UIView *sliderTimePlay;
-@property (nonatomic, strong) UIView *sliderTimeLoad;
+// Controls
+@property (nonatomic) NSTimer *timerUpdate;
+@property (nonatomic) NSTimer *timerControl;
+@property (nonatomic) BOOL sliderTimeIsTouch;
+@property (nonatomic) BOOL sliderVolumeIsTouch;
+@property (nonatomic) BOOL controlsIsHidden;
+@property (nonatomic) MPMusicPlayerController *sound;
+@property (nonatomic) UIView *wrapperControls;
+@property (nonatomic) UIView *zoneTouchControls;
+@property (nonatomic) MPMoviePlayerCustomTemplate *playerTemplate;
+
+// Frame
+@property (nonatomic) CGRect smallFrame;
+@property (nonatomic) int heightScreen;
+@property (nonatomic) int widthScreen;
+
+// UI
+@property (nonatomic) UIView *panel;
+@property (nonatomic) UIView *header;
+@property (nonatomic) UIView *sliderTimePlay;
+@property (nonatomic) UIView *sliderTimeLoad;
+@property (nonatomic) UILabel *headerTitle;
+@property (nonatomic) UIButton *btnQuit;
+@property (nonatomic) UIButton *btnPlayPause;
+@property (nonatomic) UIButton *btnBackward;
+@property (nonatomic) UIButton *btnForward;
+@property (nonatomic) UIButton *btnFullScreen;
+@property (nonatomic) UISlider *sliderTime;
+@property (nonatomic) UIImageView *iconeSound;
+@property (nonatomic) MPMoviePlayerCustomCursor *cursorTime;
 
 @end
 
@@ -141,12 +155,8 @@ NSString *nameImgBtnForward = @"btnForward";
     [self.sliderTime setThumbImage:[UIImage alloc] forState:UIControlStateNormal];
     [self.sliderTime setMinimumTrackImage:[UIImage alloc] forState:UIControlStateNormal];
     
-    //
     // Params Template
-    //
-    
     [_playerTemplate customHeader:_header forControleCustomStyle:_controleCustomStyle custom:_headerBackground];
-//    [_playerTemplate customSliderTime:_sliderTime forControleCustomStyle:_controleCustomStyle customMaximumTrack:_sliderMaximumTrack minimumTrack:_sliderMinimumTrack AndCurrentThumb:_sliderCurrentThumbImage];
     [_playerTemplate customHeaderTitle:_headerTitle forControleCustomStyle:_controleCustomStyle customColor:_headerTextColor customFont:_headerTextFont];
     [_playerTemplate customBtnQuit:_btnQuit forControleCustomStyle:_controleCustomStyle customImage:_imgBtnQuit];
     [_playerTemplate customPanel:_panel forControleCustomStyle:_controleCustomStyle custom:_panelBackground];
@@ -157,24 +167,20 @@ NSString *nameImgBtnForward = @"btnForward";
     [_playerTemplate customIconeSound:_iconeSound forControleCustomStyle:_controleCustomStyle customImage:_imgIconeSound];
     [_playerTemplate customSliderTimePlay:_sliderTimePlay forControleCustomStyle:_controleCustomStyle custom:_imgSliderTimePlay];
     [_playerTemplate customSliderTimeLoad:_sliderTimeLoad forControleCustomStyle:_controleCustomStyle custom:_imgSliderTimeLoad];
+    [_playerTemplate customCursor:_cursorTime forControleCustomStyle:_controleCustomStyle customBackground:_imgCursorBackgound customPointer:_imgCursorPointer];
     
-    
-    //
     // Add
-    //
-    
     [self.wrapperControls addSubview:_header];
     [self.header addSubview:_headerTitle];
     [self.header addSubview:_btnQuit];
     [self.wrapperControls addSubview:_panel];
-    
 //    [self.panel addSubview:_sliderVolume];
-    
     [self.panel addSubview:_btnPlayPause];
     [self.panel addSubview:_btnBackward];
     [self.panel addSubview:_btnForward];
     [self.panel addSubview:_btnFullScreen];
     [self.panel addSubview:_iconeSound];
+    [self.panel addSubview:_cursorTime];
     [self.panel addSubview:_sliderTimeLoad];
     [self.panel addSubview:_sliderTimePlay];
     [self.panel addSubview:_sliderTime];
@@ -215,7 +221,8 @@ NSString *nameImgBtnForward = @"btnForward";
     self.iconeSound.frame       = CGRectMake(23 - corrctionMinSize * 0.5, 51, 25, 25);
     [self sliderTimePlaySize];
     [self sliderTimeLoadSize];
-    self.sliderTime.frame       = CGRectMake(0, 12, frame.size.width, 20);
+    [self.cursorTime updatePositionWithWidthPanel:self.panel.frame.size.width AndProgressPlay:_sliderTime.value forDuration:_player.duration];
+    self.sliderTime.frame       = CGRectMake( -10, 0, frame.size.width + 20, 42);
 //    self.sliderVolume.frame     = CGRectMake(0, 0, frame.size.width, 30);
     
 }
@@ -344,6 +351,10 @@ NSString *nameImgBtnForward = @"btnForward";
     self.iconeSound              = nil;
     self.iconeSound              = [[UIImageView alloc]init];
     
+    [self.cursorTime removeFromSuperview];
+    self.cursorTime              = nil;
+    self.cursorTime              = [[MPMoviePlayerCustomCursor alloc]init];
+    
     [self.sliderTimePlay removeFromSuperview];
     self.sliderTimePlay              = nil;
     self.sliderTimePlay              = [[UIView alloc]init];
@@ -374,6 +385,7 @@ NSString *nameImgBtnForward = @"btnForward";
     
     [self sliderTimeLoadSize];
     [self sliderTimePlaySize];
+    [self.cursorTime updatePositionWithWidthPanel:self.panel.frame.size.width AndProgressPlay:_sliderTime.value forDuration:_player.duration];
     
     // Si le volume à changé
     if (!_sliderVolumeIsTouch) {
@@ -392,7 +404,10 @@ NSString *nameImgBtnForward = @"btnForward";
 }
 
 - (void)sliderTimeDown{
-    [self resetTimerControls];
+    
+    // On stop le timer
+    [_timerControl invalidate];
+    
     _sliderTimeIsTouch = YES;
 }
 
@@ -403,7 +418,10 @@ NSString *nameImgBtnForward = @"btnForward";
 }
 
 - (void)sliderVolumeDown{
-    [self resetTimerControls];
+    
+    // On stop le timer
+    [_timerControl invalidate];
+    
     _sliderVolumeIsTouch = YES;
 }
 
@@ -433,6 +451,7 @@ NSString *nameImgBtnForward = @"btnForward";
                          animations:^{
                              self.header.frame = CGRectMake( 0, 0, self.header.frame.size.width, self.header.frame.size.height);
                              self.panel.frame = CGRectMake( 0, heightSelf - panelHeight, self.panel.frame.size.width, panelHeight);
+                             self.cursorTime.alpha = 1;
                          }
                          completion:^(BOOL finished) {
                              _controlsIsHidden = !_controlsIsHidden;
@@ -449,6 +468,7 @@ NSString *nameImgBtnForward = @"btnForward";
                          animations:^{
                              self.header.frame = CGRectMake( 0, - headerHeight, self.header.frame.size.width, self.header.frame.size.height);
                              self.panel.frame = CGRectMake( 0, heightSelf, self.panel.frame.size.width, panelHeight);
+                             self.cursorTime.alpha = 0;
                          }
                          completion:^(BOOL finished) {
                              _controlsIsHidden = !_controlsIsHidden;

@@ -42,16 +42,16 @@ enum ControleCustomStyle : NSInteger {
 /////////////
 
 // Url movie
-@property (nonatomic, strong) NSString *url;
+@property (nonatomic) NSString *url;
 
 // Title movie
-@property (nonatomic, strong) NSString *title;
+@property (nonatomic) NSString *title;
 
 // if Play is Full Screen
 @property (nonatomic, readonly) BOOL isFullScreen;
 
 // Select different style
-@property (nonatomic, readwrite) ControleCustomStyle controleCustomStyle;
+@property (nonatomic) ControleCustomStyle controleCustomStyle;
 
 /////////////
 // Custom UI
@@ -62,57 +62,62 @@ enum ControleCustomStyle : NSInteger {
 //
 
 // Background image of header
-@property (nonatomic, readwrite) UIImage *headerBackground;
+@property (nonatomic) UIImage *headerBackground;
 
 // Color text titre
-@property (nonatomic, readwrite) UIColor *headerTextColor;
+@property (nonatomic) UIColor *headerTextColor;
 
 // Font / Size titre
-@property (nonatomic, readwrite) UIFont *headerTextFont;
+@property (nonatomic) UIFont *headerTextFont;
 
 // Img btn Quit
-@property (nonatomic, readwrite) UIImage *imgBtnQuit;
+@property (nonatomic) UIImage *imgBtnQuit;
 
 //
 // Panel
 //
 
 // Background image of panel
-@property (nonatomic, readwrite) UIImage *panelBackground;
+@property (nonatomic) UIImage *panelBackground;
 
 // img btn Play
-@property (nonatomic, strong) UIImage *imgBtnPlay;
+@property (nonatomic) UIImage *imgBtnPlay;
 
 // img btn Pause
-@property (nonatomic, strong) UIImage *imgBtnPause;
+@property (nonatomic) UIImage *imgBtnPause;
 
 // img btn 
-@property (nonatomic, strong) UIImage *imgBtnNext;
+@property (nonatomic) UIImage *imgBtnNext;
 
 // img btn prev
-@property (nonatomic, strong) UIImage *imgBtnPrev;
+@property (nonatomic) UIImage *imgBtnPrev;
 
 // img btn full screen
-@property (nonatomic, strong) UIImage *imgBtnFullScreen;
+@property (nonatomic) UIImage *imgBtnFullScreen;
 
 // img icone Sound
-@property (nonatomic, strong) UIImage *imgIconeSound;
+@property (nonatomic) UIImage *imgIconeSound;
 
 // img slider time play
-@property (nonatomic, strong) UIImage *imgSliderTimePlay;
+@property (nonatomic) UIImage *imgSliderTimePlay;
 
 // img slider time load
-@property (nonatomic, strong) UIImage *imgSliderTimeLoad;
+@property (nonatomic) UIImage *imgSliderTimeLoad;
+
+// img background Cursor
+@property (nonatomic) UIImage *imgCursorBackgound;
+
+// img pointer Cursor
+@property (nonatomic) UIImage *imgCursorPointer;
 
 
 
 
+@property (nonatomic) UIImage *sliderMinimumTrack;
 
-@property (nonatomic, readwrite) UIImage *sliderMinimumTrack;
+@property (nonatomic) UIImage *sliderMaximumTrack;
 
-@property (nonatomic, readwrite) UIImage *sliderMaximumTrack;
-
-@property (nonatomic, readwrite) UIImage *sliderCurrentThumbImage;
+@property (nonatomic) UIImage *sliderCurrentThumbImage;
 
 // Functions
 

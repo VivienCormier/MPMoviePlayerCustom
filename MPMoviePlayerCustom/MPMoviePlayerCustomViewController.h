@@ -10,6 +10,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "MPMoviePlayerCustomTemplate.h"
 
+
 @protocol MPMoviePlayerCustomControllerDelegate <NSObject>
 
 // Delegate Function
@@ -21,114 +22,60 @@
 
 @interface MPMoviePlayerCustomViewController : UIViewController
 
-//
-//Ready-only
-//
-@property (nonatomic, readwrite) BOOL isFullScreen;
-@property (nonatomic, readonly) UIView *wrapperControls;
-@property (nonatomic, readonly) UIView *zoneTouchControls;
-@property (nonatomic, readonly) MPMoviePlayerCustomViewController *wrapperFullScreen;
-@property (nonatomic, readonly) MPMoviePlayerCustomTemplate *playerTemplate;
-// Header
-@property (nonatomic, readonly) UIView *header;
-@property (nonatomic, readonly) UISlider *sliderTime;
-
-//
 // Movie Player
-//
-
 @property (retain) id delegate;
-
-@property (nonatomic, strong) MPMoviePlayerController *player;
-
-@property (nonatomic, strong) NSString *url;
-
-@property (nonatomic, strong) NSString *titleMovie;
-
+@property (nonatomic) MPMoviePlayerController *player;
+@property (nonatomic) NSString *url;
+@property (nonatomic) NSString *titleMovie;
 @property (nonatomic, readwrite) int controleCustomStyle;
+@property (nonatomic, readwrite) BOOL isFullScreen;
 
-//
 // Header
-//
+@property (nonatomic) UIImage *headerBackground;
+@property (nonatomic) UIColor *headerTextColor;
+@property (nonatomic) UIFont *headerTextFont;
+@property (nonatomic) UIImage *imgBtnQuit;
 
-@property (nonatomic, readwrite) UIImage *headerBackground;
-
-@property (nonatomic, readwrite) UILabel *headerTitle;
-
-@property (nonatomic, readwrite) UIColor *headerTextColor;
-
-@property (nonatomic, readwrite) UIFont *headerTextFont;
-
-@property (nonatomic, strong) UIImage *imgBtnQuit;
-
-//
 // Panel
-//
-
-@property (nonatomic, readwrite) UIImage *panelBackground;
-
-@property (nonatomic, strong) UIImage *imgBtnPlay;
-
-@property (nonatomic, strong) UIImage *imgBtnPause;
-
-@property (nonatomic, strong) UIImage *imgBtnPrev;
-
-@property (nonatomic, strong) UIImage *imgBtnNext;
-
-@property (nonatomic, strong) UIImage *imgBtnFullScreen;
-
-@property (nonatomic, strong) UIImageView *iconeSound;
-
-@property (nonatomic, strong) UIImage *imgIconeSound;
-
-@property (nonatomic, strong) UIImage *imgSliderTimePlay;
-
-@property (nonatomic, strong) UIImage *imgSliderTimeLoad;
+@property (nonatomic) UIImage *panelBackground;
+@property (nonatomic) UIImage *imgBtnPlay;
+@property (nonatomic) UIImage *imgBtnPause;
+@property (nonatomic) UIImage *imgBtnPrev;
+@property (nonatomic) UIImage *imgBtnNext;
+@property (nonatomic) UIImage *imgBtnFullScreen;
+@property (nonatomic) UIImage *imgIconeSound;
+@property (nonatomic) UIImage *imgSliderTimePlay;
+@property (nonatomic) UIImage *imgSliderTimeLoad;
+@property (nonatomic) UIImage *imgCursorBackgound;
+@property (nonatomic) UIImage *imgCursorPointer;
 
 
 
-@property (nonatomic, readwrite) UIImage *sliderMinimumTrack;
+@property (nonatomic) UIImage *sliderMinimumTrack;
 
-@property (nonatomic, readwrite) UIImage *sliderMaximumTrack;
+@property (nonatomic) UIImage *sliderMaximumTrack;
 
-@property (nonatomic, readwrite) UIImage *sliderCurrentThumbImage;
+@property (nonatomic) UIImage *sliderCurrentThumbImage;
 
 
 
 
 
-@property (nonatomic, strong) UISlider *sliderVolume;
-
-
-
-
-@property (nonatomic, strong) UIImage *imgBtnForward;
+@property (nonatomic) UISlider *sliderVolume;
 
 
 // Functions
-
 - (id)initWithFrame:(CGRect)frame;
-
 - (id)initWithFrame:(CGRect)frame AndUrl:(NSString *)url;
-
 - (id)initWithUrl:(NSString *)url;
-
 - (void)setFrame:(CGRect)frame;
-
 - (void)changeControleTo:(int)controleCustomStyle;
-
 - (void)backward;
-
 - (void)forward;
-
 - (void)quitAction;
-
 - (void)fullScreenAction;
-
 - (void)play;
-
 - (void)pause;
-
 - (void)stop;
 
 @end

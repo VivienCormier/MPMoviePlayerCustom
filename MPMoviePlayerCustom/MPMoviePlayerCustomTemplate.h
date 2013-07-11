@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class MPMoviePlayerCustomCursor;
+
 @interface MPMoviePlayerCustomTemplate : NSObject
 
 - (void)customHeader:(UIView*)header forControleCustomStyle:(int)controleCustomStyle custom:(UIImage*)headerBackground;
@@ -23,5 +25,6 @@
 - (void)customIconeSound:(UIImageView *)iconeSound forControleCustomStyle:(int)controleCustomStyle customImage:(UIImage *)imgBtnFullScreen;
 - (void)customSliderTimePlay:(UIView*)sliderTimePlay forControleCustomStyle:(int)controleCustomStyle custom:(UIImage*)imgSliderTimePlay;
 - (void)customSliderTimeLoad:(UIView*)sliderTimeLoad forControleCustomStyle:(int)controleCustomStyle custom:(UIImage*)imgSliderTimeLoad;
+- (void)customCursor:(MPMoviePlayerCustomCursor*)cursor forControleCustomStyle:(int)controleCustomStyle customBackground:(UIImage*)imgCursorBackground customPointer:(UIImage*)imgCursorPointer;
 
 @end

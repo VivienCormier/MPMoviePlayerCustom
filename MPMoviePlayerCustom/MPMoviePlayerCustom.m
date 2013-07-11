@@ -110,6 +110,8 @@
             self.player.imgIconeSound = _imgIconeSound;
             self.player.imgSliderTimePlay = _imgSliderTimePlay;
             self.player.imgSliderTimeLoad = _imgSliderTimeLoad;
+            self.player.imgCursorBackgound = _imgCursorBackgound;
+            self.player.imgCursorPointer = _imgCursorPointer;
             break;
         default:
             break;

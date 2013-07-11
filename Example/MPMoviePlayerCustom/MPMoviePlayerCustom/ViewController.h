@@ -11,6 +11,6 @@
 
 @interface ViewController : UIViewController<MPMoviePlayerCustomDelegate>
 
-@property (nonatomic, strong) MPMoviePlayerCustom *moviePlayer;
+@property (nonatomic) MPMoviePlayerCustom *moviePlayer;
 
 @end
