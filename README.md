@@ -1,7 +1,7 @@
 MPMoviePlayerCustom
 ===================
 
-Custom MPMoviePlayer for iOS
+Customizable movie player for iOS.
 
 Work in progress
 ================
