@@ -21,7 +21,7 @@
     UIView *test = [[UIView alloc]initWithFrame:CGRectMake(10, 50, 500, 500)];
     [self.view addSubview:test];
     
-    self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(10, 50, 350, 200)];
+    self.moviePlayer = [[MPMoviePlayerCustom alloc]initWithFrame:CGRectMake(10, 50, 280, 150)];
     self.moviePlayer.url = @"http://static.pyramyd.com/video/m4v/Eoin%20Duffy.m4v";
     self.moviePlayer.delegate = self;
     self.moviePlayer.title = @"Titre de la vidéo";

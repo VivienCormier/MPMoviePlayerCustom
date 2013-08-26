@@ -492,11 +492,10 @@ NSString *nameImgBtnForward = @"btnForward";
     _widthScreen    = [[UIScreen mainScreen] bounds].size.width;
     _heightScreen   = [[UIScreen mainScreen] bounds].size.height;
     
-    
-    if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeLeft || [[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeRight) {
+    if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft) {
         _heightScreen    = [[UIScreen mainScreen] bounds].size.width;
         _widthScreen   = [[UIScreen mainScreen] bounds].size.height;
-    }else if ([UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeLeft || [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight) {
+    }else if ([[UIDevice currentDevice] orientation] == UIInterfaceOrientationLandscapeRight || [UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationLandscapeRight){
         _heightScreen    = [[UIScreen mainScreen] bounds].size.width;
         _widthScreen   = [[UIScreen mainScreen] bounds].size.height;
     }
@@ -517,12 +516,10 @@ NSString *nameImgBtnForward = @"btnForward";
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
     
-    if ( UIInterfaceOrientationIsPortrait(toInterfaceOrientation))
-    {
+    if ( UIInterfaceOrientationIsPortrait(toInterfaceOrientation)){
         _widthScreen    = [[UIScreen mainScreen] bounds].size.width;
         _heightScreen   = [[UIScreen mainScreen] bounds].size.height;
-    }
-    else {
+    }else{
         _widthScreen    = [[UIScreen mainScreen] bounds].size.height;
         _heightScreen   = [[UIScreen mainScreen] bounds].size.width;
     }

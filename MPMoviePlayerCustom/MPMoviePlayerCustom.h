@@ -12,15 +12,21 @@
 
 @protocol MPMoviePlayerCustomDelegate <NSObject>
 
-//
-// Delegate Function
-//
+/*
+ **********************
+ *  Delegate Functions
+ **********************
+ */
 @optional
 
-// if user clik on cross
+/**
+ *	If user click on quit button
+ */
 - (void)moviePlayerBtnQuitAction;
 
-// if movie is Finish
+/**
+ *	If the movie is finish
+ */
 - (void)moviePlayerDidFinish;
 
 @end
@@ -37,77 +43,125 @@ enum ControleCustomStyle : NSInteger {
 
 @property (retain) id delegate;
 
-/////////////
-// Player
-/////////////
+/*
+ **********
+ *  Player
+ **********
+ */
 
-// Url movie
+/**
+ *	Player url
+ */
 @property (nonatomic) NSString *url;
 
-// Title movie
+/**
+ *	Player title
+ */
 @property (nonatomic) NSString *title;
 
-// if Play is Full Screen
+/**
+ *	True if player is fullscreen
+ */
 @property (nonatomic, readonly) BOOL isFullScreen;
 
-// Select different style
+/**
+ *	Select visuale apparence :
+ *  ControleCustomStyleWhite
+ *  ControleCustomStyleBlack
+ *  ControleCustomStyleFree
+ */
 @property (nonatomic) ControleCustomStyle controleCustomStyle;
 
-/////////////
-// Custom UI
-/////////////
+/**
+ *  If you chose ControleCustomStyleFree,
+ *  you can custom all UI.
+ */
 
-//
-// Header
-//
+/*
+ *************
+ *  Header UI
+ *************
+ */
 
-// Background image of header
+/**
+ *	Header image background
+ */
 @property (nonatomic) UIImage *headerBackground;
 
-// Color text titre
+/**
+ *	Title color
+ */
 @property (nonatomic) UIColor *headerTextColor;
 
-// Font / Size titre
+/**
+ *	Title font
+ */
 @property (nonatomic) UIFont *headerTextFont;
 
-// Img btn Quit
+/**
+ *	Button image quit
+ */
 @property (nonatomic) UIImage *imgBtnQuit;
 
-//
-// Panel
-//
+/*
+ ************
+ *  Panel UI
+ ************
+ */
 
-// Background image of panel
+/**
+ *	Panel image background
+ */
 @property (nonatomic) UIImage *panelBackground;
 
-// img btn Play
+/**
+ *	Button image Play
+ */
 @property (nonatomic) UIImage *imgBtnPlay;
 
-// img btn Pause
+/**
+ *	Button image Pause
+ */
 @property (nonatomic) UIImage *imgBtnPause;
 
-// img btn 
+/**
+ *	Button image Next
+ */
 @property (nonatomic) UIImage *imgBtnNext;
 
-// img btn prev
+/**
+ *	Button image Previous
+ */
 @property (nonatomic) UIImage *imgBtnPrev;
 
-// img btn full screen
+/**
+ *	Button image Fullscreen
+ */
 @property (nonatomic) UIImage *imgBtnFullScreen;
 
-// img icone Sound
+/**
+ *	Icone image Sound
+ */
 @property (nonatomic) UIImage *imgIconeSound;
 
-// img slider time play
+/**
+ *	Slider image when the movie is played
+ */
 @property (nonatomic) UIImage *imgSliderTimePlay;
 
-// img slider time load
+/**
+ *	Slider image when the movie is loaded
+ */
 @property (nonatomic) UIImage *imgSliderTimeLoad;
 
-// img background Cursor
+/**
+ *	Slider image background
+ */
 @property (nonatomic) UIImage *imgCursorBackgound;
 
-// img pointer Cursor
+/**
+ *	Cursor slider image
+ */
 @property (nonatomic) UIImage *imgCursorPointer;
 
 
